@@ -1,28 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Ultra&display=swap');
 @import "tailwindcss";
 
 :root {
-  /* JR & Co. Barber - Executive VIP Color Palette */
-  --background: #121212; /* Negro carbón */
-  --foreground: #F5F1E8; /* Crema */
-  --muted: #a39f96;
-  --muted-foreground: #66635c;
+  /* Juan Rairan - Warm Retro-Craft Color Palette */
+  --background: #E5C39E; /* Marrón caramelo/arena cálido */
+  --foreground: #2E1E1B; /* Chocolate profundo */
+  --muted: #5C443F; /* Tono café tabaco medio */
+  --muted-foreground: #8A706A;
   
-  --card: #2B2B2B; /* Gris humo */
-  --card-foreground: #F5F1E8;
+  --card: #F3D7B8; /* Crema tostado suave */
+  --card-foreground: #2E1E1B;
   
-  --primary: #C8A96B; /* Dorado viejo */
-  --primary-foreground: #121212;
+  --primary: #2E1E1B; /* Chocolate profundo para botones principales */
+  --primary-foreground: #FDF7EE; /* Crema de alto contraste */
   
-  --accent: #C8A96B;
-  --accent-foreground: #121212;
+  --accent: #B87C54; /* Caramelo tostado vivo */
+  --accent-foreground: #FDF7EE;
   
-  --border: rgba(200, 169, 107, 0.2); /* Thin gold border */
-  --border-hover: rgba(200, 169, 107, 0.45);
+  --border: rgba(46, 30, 27, 0.15); /* Bordes chocolate sutiles */
+  --border-hover: rgba(46, 30, 27, 0.35);
   
-  --success: #6e8c68;
-  --warning: #bfa573;
-  --destructive: #9c423b;
+  --success: #5C7C59;
+  --warning: #C48F45;
+  --destructive: #994B43;
 }
 
 @theme inline {
@@ -41,45 +41,45 @@
   --color-warning: var(--warning);
   --color-destructive: var(--destructive);
   
-  --font-sans: 'Inter', sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Outfit', sans-serif;
+  --font-serif: 'Ultra', Georgia, serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Outfit', sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   background-image: 
-    radial-gradient(rgba(200, 169, 107, 0.015) 1px, transparent 0),
-    radial-gradient(rgba(200, 169, 107, 0.015) 1px, transparent 0);
+    radial-gradient(rgba(46, 30, 27, 0.03) 1px, transparent 0),
+    radial-gradient(rgba(46, 30, 27, 0.03) 1px, transparent 0);
   background-size: 30px 30px;
   background-position: 0 0, 15px 15px;
 }
 
-/* Premium VIP UI styles matching the attached mockup */
+/* Premium Retro UI styles matching the attached mockup */
 .vip-font-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Ultra', Georgia, serif;
 }
 
 .vip-panel {
-  background: #1a1a1a;
-  background-image: linear-gradient(135deg, #1e1e1e, #141414);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  background: #F5D9B6;
+  background-image: linear-gradient(135deg, #FDF7EE, #F3D7B8);
+  border: 2px solid var(--primary);
+  border-radius: 20px;
   box-shadow: 
-    0 20px 40px -15px rgba(0, 0, 0, 0.9),
-    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    0 12px 30px -10px rgba(46, 30, 27, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   position: relative;
 }
 
 .vip-frame {
   position: relative;
   padding: 16px;
-  border: 1px solid rgba(200, 169, 107, 0.25);
-  background: #181818;
-  border-radius: 16px;
+  border: 2px solid var(--primary);
+  background: #FDF7EE;
+  border-radius: 24px;
 }
 .vip-frame::before {
   content: '';
@@ -88,42 +88,44 @@ body {
   left: 4px;
   right: 4px;
   bottom: 4px;
-  border: 1px solid rgba(200, 169, 107, 0.06);
-  border-radius: 12px;
+  border: 1px dashed rgba(46, 30, 27, 0.25);
+  border-radius: 20px;
   pointer-events: none;
 }
 
 .vip-card {
-  background: #2B2B2B; /* Gris humo */
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  background: #F3D7B8;
+  border: 2.5px solid var(--primary);
+  border-radius: 16px;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .vip-card:hover {
   border-color: var(--primary);
-  background: #333333;
+  background: #E5C39E;
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px rgba(200, 169, 107, 0.15);
+  box-shadow: 0 12px 30px -10px rgba(46, 30, 27, 0.25);
 }
 
-/* Luxury gold buttons matching the Mockup "Get Started" styling */
+/* Rounded capsule buttons matching mockup styling */
 .gold-btn {
-  background: linear-gradient(135deg, #C8A96B 0%, #aa8b4c 100%);
-  color: #121212;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 800;
+  font-family: 'Ultra', Georgia, serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  border: 1px solid #e0c285;
-  border-radius: 24px; /* Mockup button has rounded capsules! */
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 24px -6px rgba(200, 169, 107, 0.4);
+  border: 2px solid var(--primary);
+  border-radius: 9999px; /* Capsule shape */
+  box-shadow: 0 8px 20px -6px rgba(46, 30, 27, 0.4);
   transition: all 0.2s ease;
 }
 
 .gold-btn:hover {
-  background: linear-gradient(135deg, #dcc082 0%, #b89856 100%);
-  box-shadow: 0 10px 28px -4px rgba(200, 169, 107, 0.6);
+  background: #472F2B;
+  border-color: #472F2B;
+  box-shadow: 0 10px 24px -4px rgba(46, 30, 27, 0.5);
   transform: translateY(-1px);
 }
 
@@ -134,55 +136,54 @@ body {
 .gold-outline-btn {
   background: transparent;
   color: var(--primary);
-  border: 1px solid var(--primary);
-  font-weight: 500;
-  border-radius: 20px;
-  letter-spacing: 0.03em;
+  border: 2px solid var(--primary);
+  font-weight: 700;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
   transition: all 0.2s ease;
 }
 
 .gold-outline-btn:hover {
-  background: rgba(200, 169, 107, 0.08);
-  border-color: #dcc082;
+  background: rgba(46, 30, 27, 0.05);
 }
 
 .vip-input {
-  background: #181818;
-  border: 1px solid var(--border);
+  background: #FDF7EE;
+  border: 2px solid var(--primary);
   color: var(--foreground);
-  border-radius: 8px;
+  border-radius: 12px;
   transition: all 0.2s ease;
 }
 
 .vip-input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(200, 169, 107, 0.12);
+  box-shadow: 0 0 0 3px rgba(46, 30, 27, 0.12);
 }
 
-/* Barber Shop Strip animation updated for VIP */
+/* Barber Shop Strip animation */
 .barber-pole-border {
   background: repeating-linear-gradient(
     -45deg,
-    #9c423b,
-    #9c423b 8px,
-    #F5F1E8 8px,
-    #F5F1E8 16px,
-    #2c4f7c 16px,
-    #2c4f7c 24px,
-    #F5F1E8 24px,
-    #F5F1E8 32px
+    #994B43,
+    #994B43 8px,
+    #FDF7EE 8px,
+    #FDF7EE 16px,
+    #2E1E1B 16px,
+    #2E1E1B 24px,
+    #FDF7EE 24px,
+    #FDF7EE 32px
   );
-  height: 3px;
+  height: 4px;
   width: 100%;
 }
 
-/* Loyalty stamp slot styling matching high-end design */
+/* Loyalty stamp slot styling */
 .loyalty-stamp-slot {
   width: 50px;
   height: 50px;
-  border: 2px dashed rgba(200, 169, 107, 0.25);
-  background: rgba(43, 43, 43, 0.4); /* Gris humo transparentized */
+  border: 2.5px dashed rgba(46, 30, 27, 0.4);
+  background: rgba(243, 215, 184, 0.6);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -191,10 +192,10 @@ body {
 }
 
 .loyalty-stamp-active {
-  border: 2px solid var(--primary);
-  background: radial-gradient(circle, #fcf5e3 0%, #C8A96B 100%);
-  color: #121212;
-  box-shadow: 0 0 15px rgba(200, 169, 107, 0.35);
+  border: 2.5px solid var(--primary);
+  background: radial-gradient(circle, #FDF7EE 0%, #E5C39E 100%);
+  color: var(--primary);
+  box-shadow: 0 0 15px rgba(46, 30, 27, 0.2);
   transform: scale(1.05);
 }
 
@@ -204,15 +205,14 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #121212;
+  background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2B2B2B;
+  background: var(--primary);
   border-radius: 4px;
-  border: 1px solid var(--border);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3a3a;
+  background: #472F2B;
 }
 
 /* ─────────────── Scissors Transition Animation ─────────────── */
@@ -233,7 +233,7 @@ body {
 
 .scissors-anim {
   animation: scissors-spin 0.7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  filter: drop-shadow(0 0 12px rgba(200, 169, 107, 0.6));
+  filter: drop-shadow(0 0 12px rgba(46, 30, 27, 0.3));
 }
 
 .scissors-anim line,
@@ -242,15 +242,15 @@ body {
   animation: scissors-snip 0.7s ease-in-out infinite;
 }
 
-/* ─────────────── Vintage Alias Classes (client/profile compat) ─────────────── */
+/* ─────────────── Vintage Alias Classes ─────────────── */
 .vintage-panel {
-  background: #1a1a1a;
-  background-image: linear-gradient(135deg, #1e1e1e, #141414);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  background: #F5D9B6;
+  background-image: linear-gradient(135deg, #FDF7EE, #F3D7B8);
+  border: 2px solid var(--primary);
+  border-radius: 20px;
   box-shadow: 
-    0 20px 40px -15px rgba(0, 0, 0, 0.9),
-    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    0 12px 30px -10px rgba(46, 30, 27, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   position: relative;
   padding: 16px;
 }
@@ -258,9 +258,9 @@ body {
 .vintage-frame {
   position: relative;
   padding: 16px;
-  border: 1px solid rgba(200, 169, 107, 0.25);
-  background: #181818;
-  border-radius: 16px;
+  border: 2px solid var(--primary);
+  background: #FDF7EE;
+  border-radius: 24px;
 }
 .vintage-frame::before {
   content: '';
@@ -269,16 +269,16 @@ body {
   left: 4px;
   right: 4px;
   bottom: 4px;
-  border: 1px solid rgba(200, 169, 107, 0.06);
-  border-radius: 12px;
+  border: 1px dashed rgba(46, 30, 27, 0.25);
+  border-radius: 20px;
   pointer-events: none;
 }
 
 .vintage-input {
-  background: #181818;
-  border: 1px solid var(--border);
+  background: #FDF7EE;
+  border: 2px solid var(--primary);
   color: var(--foreground);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 8px 12px;
   transition: all 0.2s ease;
   width: 100%;
@@ -286,6 +286,6 @@ body {
 .vintage-input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(200, 169, 107, 0.12);
+  box-shadow: 0 0 0 3px rgba(46, 30, 27, 0.12);
 }
 

@@ -8,6 +8,29 @@ import {
 import Link from 'next/link';
 import { Client, Booking, BarberSettings } from '@/lib/supabase';
 
+/* ─────────────── Reusable Bearded Man Logo ─────────────── */
+function BeardedManLogo({ className = "w-10 h-10 text-primary" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Cabello cepillado arriba */}
+      <path d="M 35 18 C 38 10, 60 10, 65 18 M 38 25 C 45 15, 62 15, 65 22 M 42 30 C 48 20, 60 20, 65 26" />
+      {/* Contorno de cara y barba */}
+      <path d="M 33 30 L 33 55 C 33 65, 35 70, 50 85 C 65 70, 67 65, 67 55 L 67 30 Z" />
+      {/* Orejas */}
+      <path d="M 33 42 C 28 42, 28 50, 33 50" />
+      {/* Ojos cerrados / relajados */}
+      <path d="M 38 41 C 41 45, 45 45, 48 41" />
+      <path d="M 52 41 C 55 45, 59 45, 62 41" />
+      {/* Nariz */}
+      <path d="M 47 50 L 50 47 L 53 50" />
+      {/* Bigote (Mostacho) */}
+      <path d="M 40 58 C 45 56, 48 58, 50 60 C 52 58, 55 56, 60 58 C 62 60, 61 64, 60 65 C 57 65, 53 62, 50 62 C 47 62, 43 65, 40 65 C 39 64, 38 60, 40 58 Z" />
+      {/* Líneas de detalle de la barba */}
+      <path d="M 42 66 L 42 74 M 46 66 L 46 78 M 50 66 L 50 80 M 54 66 L 54 78 M 58 66 L 58 74" />
+    </svg>
+  );
+}
+
 export default function ClientProfile() {
   const [phoneInput, setPhoneInput] = useState('');
   const [client, setClient] = useState<Client | null>(null);
@@ -87,26 +110,32 @@ export default function ClientProfile() {
 
   const loyaltyVisitsRequired = settings?.loyaltyVisitsRequired || 5;
   const loyaltyBenefit = settings?.loyaltyBenefit || 'Corte gratis o 50% de descuento';
-  const barberName = settings?.barberName || 'La Elegante Barbería';
+  const barberName = 'Juan Rairan';
 
   return (
-    <div className="flex-1 w-full max-w-md mx-auto px-4 py-6 flex flex-col justify-between min-h-screen">
+    <div className="flex-1 w-full max-w-md mx-auto px-4 py-6 flex flex-col justify-between min-h-screen text-primary">
       <div>
         {/* Navigation Header */}
         <div className="flex items-center justify-between mb-6">
-          <Link href="/" className="text-[#bdae9e] hover:text-[#d4af37] flex items-center gap-1 text-xs">
+          <Link href="/" className="text-primary hover:underline flex items-center gap-1 text-xs font-bold">
             <ArrowLeft className="h-4 w-4" /> Volver al Inicio
           </Link>
-          <span className="text-[10px] text-[#8a7a6b] font-serif uppercase tracking-widest">PERFIL DEL CLIENTE</span>
+          <span className="text-[10px] text-primary/70 font-sans font-bold uppercase tracking-widest">PERFIL DEL CLIENTE</span>
         </div>
 
         <header className="text-center mb-6">
-          <h1 className="text-2xl font-serif tracking-widest text-[#d4af37] uppercase">
-            {barberName}
-          </h1>
-          <p className="text-[9px] text-[#8a7a6b] uppercase tracking-wider mt-1">
-            Consulta tu historial y tarjeta de fidelización
-          </p>
+          <div className="barber-pole-border mb-4 rounded"></div>
+          <div className="flex flex-col items-center gap-2 mt-3">
+            <div className="h-16 w-16 rounded-full border-2 border-primary flex items-center justify-center bg-card shadow-md">
+              <BeardedManLogo className="w-11 h-11 text-primary" />
+            </div>
+            <h1 className="text-3xl font-serif tracking-widest text-primary uppercase drop-shadow-sm">
+              {barberName}
+            </h1>
+            <p className="text-[10px] text-primary/70 tracking-wider font-sans uppercase font-bold mt-1">
+              Consulta tu historial y tarjeta de fidelización
+            </p>
+          </div>
         </header>
 
         {/* 1. SEARCH BOX */}
@@ -212,44 +241,44 @@ export default function ClientProfile() {
 
             {/* APPOINTMENT HISTORY */}
             <div className="space-y-3">
-              <h3 className="text-xs font-serif uppercase tracking-wider text-[#d4af37] flex items-center gap-1.5">
-                <Calendar className="h-4 w-4 text-[#d4af37]" /> Tu Historial de Citas
+              <h3 className="text-xs font-serif uppercase tracking-wider text-primary flex items-center gap-1.5 font-bold">
+                <Calendar className="h-4 w-4 text-primary" /> Tu Historial de Citas
               </h3>
 
               {bookings.length === 0 ? (
-                <div className="text-center py-6 bg-[#171311] border border-[#d4af37]/10 rounded text-xs text-[#8a7a6b] italic">
+                <div className="text-center py-6 bg-card border border-primary/20 rounded text-xs text-primary/70 italic">
                   Aún no registras citas solicitadas con este celular.
                 </div>
               ) : (
                 <div className="space-y-2">
-                  {bookings.map((booking) => {
+                  {bookings.map((booking: Booking) => {
                     let statusLabel = 'Pendiente';
-                    let statusColor = 'border-[#d99f59]/30 text-[#d99f59] bg-[#d99f59]/5';
+                    let statusColor = 'border-amber-700/30 text-amber-900 bg-amber-700/5';
 
                     if (booking.status === 'confirmed') {
                       statusLabel = 'Confirmada';
-                      statusColor = 'border-[#d4af37]/35 text-[#d4af37] bg-[#d4af37]/5';
+                      statusColor = 'border-primary/35 text-primary bg-primary/5';
                     } else if (booking.status === 'completed') {
                       statusLabel = 'Completada';
-                      statusColor = 'border-[#859f7d]/30 text-[#859f7d] bg-[#859f7d]/5';
+                      statusColor = 'border-success/30 text-success bg-success/5';
                     } else if (booking.status === 'rejected' || booking.status === 'cancelled') {
                       statusLabel = 'Cancelada';
-                      statusColor = 'border-[#ab4e46]/30 text-[#ab4e46] bg-[#ab4e46]/5';
+                      statusColor = 'border-destructive/30 text-destructive bg-destructive/5';
                     }
 
                     return (
                       <div 
                         key={booking.id}
-                        className="bg-[#171311] border border-[#d4af37]/10 p-3.5 rounded flex justify-between items-center"
+                        className="bg-card border-2 border-primary p-3.5 rounded-xl flex justify-between items-center"
                       >
                         <div className="space-y-1">
-                          <p className="text-xs font-serif uppercase text-white font-bold tracking-wide">
+                          <p className="text-xs font-serif uppercase text-primary font-bold tracking-wide">
                             {booking.serviceName || 'Corte Clásico'}
                           </p>
-                          <p className="text-[10px] text-[#bdae9e] flex items-center gap-1">
-                            <Calendar className="h-3 w-3 text-[#d4af37]" /> {booking.bookingDate}
+                          <p className="text-[10px] text-primary/80 flex items-center gap-1">
+                            <Calendar className="h-3 w-3 text-primary" /> {booking.bookingDate}
                           </p>
-                          <p className="text-[10px] text-[#8a7a6b] flex items-center gap-1">
+                          <p className="text-[10px] text-primary/70 flex items-center gap-1">
                             <Clock className="h-3 w-3" /> {booking.startTime} - {booking.endTime}
                           </p>
                         </div>

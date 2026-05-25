@@ -10,13 +10,37 @@ import { TimeSlot } from '@/lib/engine/optimizer';
 import { Service, BarberSettings } from '@/lib/supabase';
 import Link from 'next/link';
 
+/* ─────────────── Reusable Bearded Man Logo ─────────────── */
+function BeardedManLogo({ className = "w-10 h-10 text-primary" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" className={className} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Cabello cepillado arriba */}
+      <path d="M 35 18 C 38 10, 60 10, 65 18 M 38 25 C 45 15, 62 15, 65 22 M 42 30 C 48 20, 60 20, 65 26" />
+      {/* Contorno de cara y barba */}
+      <path d="M 33 30 L 33 55 C 33 65, 35 70, 50 85 C 65 70, 67 65, 67 55 L 67 30 Z" />
+      {/* Orejas */}
+      <path d="M 33 42 C 28 42, 28 50, 33 50" />
+      <path d="M 67 42 C 72 42, 72 50, 67 50" />
+      {/* Ojos cerrados / relajados */}
+      <path d="M 38 41 C 41 45, 45 45, 48 41" />
+      <path d="M 52 41 C 55 45, 59 45, 62 41" />
+      {/* Nariz */}
+      <path d="M 47 50 L 50 47 L 53 50" />
+      {/* Bigote (Mostacho) */}
+      <path d="M 40 58 C 45 56, 48 58, 50 60 C 52 58, 55 56, 60 58 C 62 60, 61 64, 60 65 C 57 65, 53 62, 50 62 C 47 62, 43 65, 40 65 C 39 64, 38 60, 40 58 Z" />
+      {/* Líneas de detalle de la barba */}
+      <path d="M 42 66 L 42 74 M 46 66 L 46 78 M 50 66 L 50 80 M 54 66 L 54 78 M 58 66 L 58 74" />
+    </svg>
+  );
+}
+
 /* ─────────────── Scissors Page Transition ─────────────── */
 function ScissorsTransition({ visible }: { visible: boolean }) {
   if (!visible) return null;
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
-      style={{ background: 'rgba(18,18,18,0.92)', backdropFilter: 'blur(4px)' }}
+      style={{ background: 'rgba(46,30,27,0.95)', backdropFilter: 'blur(6px)' }}
     >
       <div className="flex flex-col items-center gap-4">
         {/* Scissors SVG with clip animation */}
@@ -25,9 +49,9 @@ function ScissorsTransition({ visible }: { visible: boolean }) {
           width="80"
           height="80"
           viewBox="0 0 24 24"
-          className="scissors-anim"
+          className="scissors-anim animate-pulse"
           fill="none"
-          stroke="#C8A96B"
+          stroke="#FDF7EE"
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -38,7 +62,7 @@ function ScissorsTransition({ visible }: { visible: boolean }) {
           <line x1="14.47" y1="14.48" x2="20" y2="20" />
           <line x1="8.12" y1="8.12" x2="12" y2="12" />
         </svg>
-        <p className="text-[#C8A96B] text-xs uppercase tracking-widest font-serif animate-pulse">JR &amp; Co. Barber</p>
+        <p className="text-[#FDF7EE] text-xs uppercase tracking-widest font-serif font-bold">Juan Rairan</p>
       </div>
     </div>
   );
@@ -254,59 +278,62 @@ export default function Home() {
     }
   };
 
-  const currentBarberName = settings?.barberName || 'JR & Co. Barber';
+  const currentBarberName = 'Juan Rairan';
 
   return (
-    <div className="flex-1 w-full max-w-md mx-auto px-4 py-6 flex flex-col justify-between min-h-screen">
+    <div className="flex-1 w-full max-w-md mx-auto px-4 py-6 flex flex-col justify-between min-h-screen text-primary">
       <ScissorsTransition visible={transitioning} />
       {/* Header */}
-      {activeStep > 0 && (
-        <header className="text-center mb-6 animate-in fade-in duration-300">
-          <div className="barber-pole-border mb-4 rounded"></div>
-          <h1 className="text-3xl font-serif tracking-widest text-[#C8A96B] uppercase drop-shadow-md">
+      <header className="text-center mb-6 animate-in fade-in duration-300">
+        <div className="barber-pole-border mb-4 rounded"></div>
+        <div className="flex flex-col items-center gap-2 mt-3">
+          <div className="h-16 w-16 rounded-full border-2 border-primary flex items-center justify-center bg-card shadow-md">
+            <BeardedManLogo className="w-11 h-11 text-primary" />
+          </div>
+          <h1 className="text-3xl font-serif tracking-widest text-primary uppercase drop-shadow-sm">
             {currentBarberName}
           </h1>
-          <p className="text-[10px] text-[#F5F1E8]/70 font-sans tracking-wider mt-1 uppercase">
-            VIP EXECUTIVE • EXCLUSIVO & SOFISTICADO
+          <p className="text-[10px] text-primary/70 tracking-widest font-sans uppercase font-bold">
+            Peluquería &amp; Barbería VIP
           </p>
-        </header>
-      )}
+        </div>
+      </header>
 
       {/* Guided Progress Indicator */}
       {activeStep > 0 && !bookingSuccess && (
-        <div className="flex items-center justify-between px-3 mb-6 bg-[#2B2B2B]/60 py-3 rounded-xl border border-[#C8A96B]/15">
+        <div className="flex items-center justify-between px-3 mb-6 bg-card py-3 rounded-xl border-2 border-primary">
           <button 
             type="button"
             onClick={() => setActiveStep(1)}
             className="flex flex-col items-center cursor-pointer"
           >
-            <div className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${activeStep >= 1 ? 'bg-[#C8A96B] text-[#121212] font-extrabold' : 'bg-[#121212] text-[#a39f96]'}`}>1</div>
-            <span className="text-[8px] text-[#F5F1E8]/80 mt-1 font-medium">Servicio</span>
+            <div className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${activeStep >= 1 ? 'bg-primary text-primary-foreground font-extrabold' : 'bg-background text-primary/45 border border-primary/30'}`}>1</div>
+            <span className="text-[8px] text-primary mt-1 font-bold">Servicio</span>
           </button>
-          <ChevronRight className="h-3.5 w-3.5 text-[#C8A96B]/50" />
+          <ChevronRight className="h-3.5 w-3.5 text-primary/50" />
           <button 
             type="button"
             disabled={activeStep < 2}
             onClick={() => setActiveStep(2)}
             className="flex flex-col items-center cursor-pointer disabled:opacity-40"
           >
-            <div className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${activeStep >= 2 ? 'bg-[#C8A96B] text-[#121212] font-extrabold' : 'bg-[#121212] text-[#a39f96]'}`}>2</div>
-            <span className="text-[8px] text-[#F5F1E8]/80 mt-1 font-medium">Fecha</span>
+            <div className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${activeStep >= 2 ? 'bg-primary text-primary-foreground font-extrabold' : 'bg-background text-primary/45 border border-primary/30'}`}>2</div>
+            <span className="text-[8px] text-primary mt-1 font-bold">Fecha</span>
           </button>
-          <ChevronRight className="h-3.5 w-3.5 text-[#C8A96B]/50" />
+          <ChevronRight className="h-3.5 w-3.5 text-primary/50" />
           <button 
             type="button"
             disabled={activeStep < 3}
             onClick={() => setActiveStep(3)}
             className="flex flex-col items-center cursor-pointer disabled:opacity-40"
           >
-            <div className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${activeStep >= 3 ? 'bg-[#C8A96B] text-[#121212] font-extrabold' : 'bg-[#121212] text-[#a39f96]'}`}>3</div>
-            <span className="text-[8px] text-[#F5F1E8]/80 mt-1 font-medium">Hora</span>
+            <div className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${activeStep >= 3 ? 'bg-primary text-primary-foreground font-extrabold' : 'bg-background text-primary/45 border border-primary/30'}`}>3</div>
+            <span className="text-[8px] text-primary mt-1 font-bold">Hora</span>
           </button>
-          <ChevronRight className="h-3.5 w-3.5 text-[#C8A96B]/50" />
+          <ChevronRight className="h-3.5 w-3.5 text-primary/50" />
           <div className="flex flex-col items-center">
-            <div className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${activeStep >= 4 ? 'bg-[#C8A96B] text-[#121212] font-extrabold' : 'bg-[#121212] text-[#a39f96]'}`}>4</div>
-            <span className="text-[8px] text-[#F5F1E8]/80 mt-1 font-medium">Confirmar</span>
+            <div className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${activeStep >= 4 ? 'bg-primary text-primary-foreground font-extrabold' : 'bg-background text-primary/45 border border-primary/30'}`}>4</div>
+            <span className="text-[8px] text-primary mt-1 font-bold">Confirmar</span>
           </div>
         </div>
       )}
@@ -382,43 +409,14 @@ export default function Home() {
             {activeStep === 0 && (
               <div className="text-center py-6 space-y-8 animate-in fade-in duration-300">
                 {/* Hero de Portada */}
-                <div className="relative rounded-3xl overflow-hidden border border-[#C8A96B]/25 bg-gradient-to-b from-[#2B2B2B] to-[#121212] p-8 min-h-[300px] flex flex-col justify-end space-y-4">
-                  {/* Logo circular con barbado / mostacho */}
-                  <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                    <div className="h-16 w-16 rounded-full border-2 border-[#C8A96B] flex items-center justify-center bg-[#121212]/90 shadow-lg">
-                      <svg viewBox="0 0 100 100" className="w-10 h-10 text-[#C8A96B]" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        {/* Cabello cepillado arriba */}
-                        <path d="M 35 18 C 38 10, 60 10, 65 18 M 38 25 C 45 15, 62 15, 65 22 M 42 30 C 48 20, 60 20, 65 26" />
-                        
-                        {/* Contorno de cara y barba */}
-                        <path d="M 33 30 L 33 55 C 33 65, 35 70, 50 85 C 65 70, 67 65, 67 55 L 67 30 Z" />
-                        
-                        {/* Orejas */}
-                        <path d="M 33 42 C 28 42, 28 50, 33 50" />
-                        <path d="M 67 42 C 72 42, 72 50, 67 50" />
-                        
-                        {/* Ojos cerrados / relajados */}
-                        <path d="M 38 41 C 41 45, 45 45, 48 41" />
-                        <path d="M 52 41 C 55 45, 59 45, 62 41" />
-                        
-                        {/* Nariz */}
-                        <path d="M 47 50 L 50 47 L 53 50" />
-                        
-                        {/* Bigote (Mostacho) */}
-                        <path d="M 40 58 C 45 56, 48 58, 50 60 C 52 58, 55 56, 60 58 C 62 60, 61 64, 60 65 C 57 65, 53 62, 50 62 C 47 62, 43 65, 40 65 C 39 64, 38 60, 40 58 Z" />
-                        
-                        {/* Líneas de detalle de la barba */}
-                        <path d="M 42 66 L 42 74 M 46 66 L 46 78 M 50 66 L 50 80 M 54 66 L 54 78 M 58 66 L 58 74" />
-                      </svg>
-                    </div>
-                    <span className="text-[11px] text-[#C8A96B] font-serif uppercase tracking-widest mt-2 font-bold">Juan Rairan</span>
-                  </div>
-
+                <div className="relative rounded-3xl overflow-hidden border-2 border-primary bg-card p-8 min-h-[220px] flex flex-col justify-center space-y-4 shadow-md">
                   <div className="space-y-3">
-                    <h2 className="text-2xl font-serif text-[#F5F1E8] font-bold leading-tight">
-                      Reserva tu espacio exclusivo con Juan Rairan y luce tu mejor estilo.
+                    <h2 className="text-3xl font-serif text-primary font-extrabold leading-tight">
+                      Menos espera.
+                      <br />
+                      Mejor experiencia.
                     </h2>
-                    <p className="text-[10px] text-[#a39f96] tracking-wider uppercase">
+                    <p className="text-[10px] text-primary/70 tracking-wider uppercase font-bold">
                       VIP Ejecutivo • Exclusivo &amp; Sofisticado
                     </p>
                   </div>
@@ -433,7 +431,7 @@ export default function Home() {
                 </button>
 
                 <div className="text-center pt-2">
-                  <Link href="/client/profile" className="text-xs text-[#C8A96B]/80 hover:text-[#C8A96B] transition-colors inline-flex items-center gap-1">
+                  <Link href="/client/profile" className="text-xs text-primary hover:underline inline-flex items-center gap-1 font-bold">
                     <User className="h-3.5 w-3.5" /> ¿Ya tienes una cita? Consulta tu perfil
                   </Link>
                 </div>

@@ -788,18 +788,18 @@ export default function Home() {
       </main>
 
       {/* Footer & Navigation links */}
-      <footer className="mt-8 pt-4 border-t border-[#C8A96B]/15 flex flex-col items-center gap-3">
-        <div className="flex gap-4 text-xs font-sans uppercase tracking-wider">
-          <Link href="/client/profile" className="text-[#C8A96B] hover:underline flex items-center gap-1 font-semibold">
+      <footer className="mt-8 pt-4 border-t border-primary/20 flex flex-col items-center gap-3">
+        <div className="flex gap-4 text-xs font-sans uppercase tracking-wider font-bold">
+          <Link href="/client/profile" className="text-primary hover:underline flex items-center gap-1">
             <User className="h-3.5 w-3.5" /> Mi Perfil / Sellos
           </Link>
-          <span className="text-[#a39f96]">•</span>
-          <Link href="/admin/dashboard" className="text-[#a39f96] hover:text-[#C8A96B] transition-colors flex items-center gap-1">
+          <span className="text-primary/40">•</span>
+          <Link href="/admin/dashboard" className="text-primary/70 hover:text-primary transition-colors flex items-center gap-1">
             <ShieldCheck className="h-3.5 w-3.5" /> Admin
           </Link>
         </div>
-        <p className="text-[9px] text-[#a39f96] uppercase tracking-wider font-semibold">
-          © {new Date().getFullYear()} {currentBarberName} • VIP Executive Salon
+        <p className="text-[9px] text-primary/70 uppercase tracking-wider font-bold">
+          © {new Date().getFullYear()} {currentBarberName} • JR &amp; Co.
         </p>
       </footer>
     </div>

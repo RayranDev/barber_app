@@ -293,8 +293,8 @@ export default function Home() {
           <h1 className="text-3xl font-serif tracking-widest text-primary uppercase drop-shadow-sm">
             {currentBarberName}
           </h1>
-          <p className="text-[10px] text-primary/70 tracking-widest font-sans uppercase font-bold">
-            Peluquería &amp; Barbería VIP
+          <p className="text-[10px] text-primary/70 tracking-widest font-sans uppercase font-extrabold">
+            JR &amp; Co.
           </p>
         </div>
       </header>

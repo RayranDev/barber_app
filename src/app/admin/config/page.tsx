@@ -178,7 +178,7 @@ export default function BarberConfig() {
                     required
                     value={settings.barberName || ''}
                     onChange={(e) => setSettings({ ...settings, barberName: e.target.value })}
-                    placeholder="La Elegante Barbería"
+                    placeholder="JR &amp; Co."
                     className="w-full pl-9 pr-3 py-2 text-xs vintage-input"
                   />
                   <Type className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#8a7a6b]" />

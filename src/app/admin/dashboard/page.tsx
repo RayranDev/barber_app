@@ -263,28 +263,28 @@ export default function AdminDashboard() {
     return b.status === statusFilter;
   });
 
-  const barberName = settings?.barberName || 'La Elegante Barbería';
+  const barberName = settings?.barberName || 'JR & Co.';
 
   return (
     <div className="flex-1 w-full max-w-5xl mx-auto px-4 py-6 space-y-6 min-h-screen">
       {/* Header */}
-      <header className="flex justify-between items-center border-b border-[#d4af37]/20 pb-4">
+      <header className="flex justify-between items-center border-b border-primary/20 pb-4">
         <div>
-          <h1 className="text-xl font-serif text-[#d4af37] uppercase flex items-center gap-1.5 tracking-wider">
-            {barberName} <span className="text-[9px] bg-[#d4af37]/10 text-[#d4af37] border border-[#d4af37]/25 px-2 py-0.5 rounded font-mono uppercase font-bold">Admin Panel</span>
+          <h1 className="text-xl font-sans font-extrabold text-primary uppercase flex items-center gap-1.5 tracking-wider">
+            {barberName} <span className="text-[9px] bg-primary/10 text-primary border border-primary/25 px-2 py-0.5 rounded font-mono uppercase font-bold">Admin Panel</span>
           </h1>
-          <p className="text-[10px] text-[#bdae9e] italic">Gestión inteligente clásica, compactación de agenda y fidelidad.</p>
+          <p className="text-[10px] text-muted-foreground italic font-semibold">Gestión inteligente clásica, compactación de agenda y fidelidad.</p>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => router.push('/admin/config')}
-            className="px-3.5 py-2 rounded bg-[#171311] hover:bg-[#1e1917] text-[#d4af37] border border-[#d4af37]/20 transition-all flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider"
+            className="px-3.5 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary border border-primary/25 transition-all flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider"
           >
             <Settings className="h-4 w-4" /> Configuración
           </button>
           <button
             onClick={handleLogout}
-            className="p-2 rounded bg-[#171311] hover:bg-[#ab4e46]/10 hover:text-[#ab4e46] text-[#bdae9e] border border-[#d4af37]/15 transition-all"
+            className="p-2 rounded-lg bg-primary/10 hover:bg-destructive/10 hover:text-destructive text-primary border border-primary/20 transition-all"
             title="Cerrar sesión"
           >
             <LogOut className="h-4 w-4" />
@@ -295,24 +295,24 @@ export default function AdminDashboard() {
       {/* View Options & Filters */}
       <div className="flex flex-col md:flex-row md:justify-between gap-4 items-start md:items-center">
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 bg-[#171311] border border-[#d4af37]/20 p-1 px-2.5 rounded text-xs text-[#bdae9e]">
-            <Calendar className="h-4 w-4 text-[#d4af37]" />
+          <div className="flex items-center gap-2 bg-card border border-primary/20 p-1 px-2.5 rounded-lg text-xs text-foreground">
+            <Calendar className="h-4 w-4 text-primary" />
             <input
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="bg-transparent border-none text-[#f4efea] outline-none font-bold"
+              className="bg-transparent border-none text-foreground outline-none font-bold"
             />
           </div>
 
           {/* Calendar View Switcher */}
-          <div className="bg-[#171311] p-1 rounded border border-[#d4af37]/10 flex gap-1 text-[10px] uppercase font-bold text-[#8a7a6b]">
+          <div className="bg-card p-1 rounded-lg border border-primary/15 flex gap-1 text-[10px] uppercase font-bold text-muted-foreground">
             {(['day', 'week', 'month'] as CalendarView[]).map((view) => (
               <button
                 key={view}
                 onClick={() => setCalendarView(view)}
-                className={`px-3 py-1 rounded transition-all ${
-                  calendarView === view ? 'bg-[#d4af37] text-[#1c1512]' : 'hover:text-[#f4efea]'
+                className={`px-3 py-1 rounded-md transition-all ${
+                  calendarView === view ? 'bg-primary text-primary-foreground' : 'hover:text-foreground'
                 }`}
               >
                 {view === 'day' ? 'Día' : view === 'week' ? 'Semana' : 'Mes'}
@@ -332,40 +332,40 @@ export default function AdminDashboard() {
 
       {/* Metrics Board */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="vintage-panel p-4 border-[#d4af37]/15 space-y-1">
+        <div className="vintage-panel p-4 space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-[9px] text-[#8a7a6b] font-bold uppercase tracking-wider">Ocupación</span>
-            <TrendingUp className="h-4 w-4 text-[#d4af37]" />
+            <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Ocupación</span>
+            <TrendingUp className="h-4 w-4 text-primary" />
           </div>
-          <div className="text-2xl font-serif font-bold text-white">{metrics.occupancy}%</div>
-          <div className="text-[9px] text-[#8a7a6b]">Capacidad reservada hoy</div>
+          <div className="text-2xl font-sans font-extrabold text-primary">{metrics.occupancy}%</div>
+          <div className="text-[9px] text-muted-foreground font-medium">Capacidad reservada hoy</div>
         </div>
 
-        <div className="vintage-panel p-4 border-[#d4af37]/15 space-y-1">
+        <div className="vintage-panel p-4 space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-[9px] text-[#8a7a6b] font-bold uppercase tracking-wider">Compactación IA</span>
-            <Sparkles className="h-4 w-4 text-[#d4af37]" />
+            <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Compactación IA</span>
+            <Sparkles className="h-4 w-4 text-primary" />
           </div>
-          <div className="text-2xl font-serif font-bold text-white">{metrics.continuity}%</div>
-          <div className="text-[9px] text-[#8a7a6b]">Densidad y eficiencia de slots</div>
+          <div className="text-2xl font-sans font-extrabold text-primary">{metrics.continuity}%</div>
+          <div className="text-[9px] text-muted-foreground font-medium">Densidad y eficiencia de slots</div>
         </div>
 
-        <div className="vintage-panel p-4 border-[#d4af37]/15 space-y-1">
+        <div className="vintage-panel p-4 space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-[9px] text-[#8a7a6b] font-bold uppercase tracking-wider">Tiempos Muertos</span>
-            <Clock className="h-4 w-4 text-[#c5a880]" />
+            <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Tiempos Muertos</span>
+            <Clock className="h-4 w-4 text-accent" />
           </div>
-          <div className="text-2xl font-serif font-bold text-white">{metrics.deadHours}h</div>
-          <div className="text-[9px] text-[#8a7a6b]">Horas vacías acumuladas</div>
+          <div className="text-2xl font-sans font-extrabold text-primary">{metrics.deadHours}h</div>
+          <div className="text-[9px] text-muted-foreground font-medium">Horas vacías acumuladas</div>
         </div>
 
-        <div className="vintage-panel p-4 border-[#d4af37]/15 space-y-1">
+        <div className="vintage-panel p-4 space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-[9px] text-[#8a7a6b] font-bold uppercase tracking-wider">Ingresos COP</span>
-            <DollarSign className="h-4 w-4 text-[#859f7d]" />
+            <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Ingresos COP</span>
+            <DollarSign className="h-4 w-4 text-success" />
           </div>
-          <div className="text-2xl font-serif font-bold text-white">${metrics.earnings.toLocaleString('es-CO')}</div>
-          <div className="text-[9px] text-[#8a7a6b]">Citas confirmadas y completadas</div>
+          <div className="text-2xl font-sans font-extrabold text-primary">${metrics.earnings.toLocaleString('es-CO')}</div>
+          <div className="text-[9px] text-muted-foreground font-medium">Citas confirmadas y completadas</div>
         </div>
       </div>
 
@@ -376,16 +376,16 @@ export default function AdminDashboard() {
           {/* Day View Bookings List */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <h2 className="text-xs font-serif uppercase tracking-wider text-[#d4af37]">Listado de Reservas ({selectedDate})</h2>
+              <h2 className="text-xs font-sans font-bold uppercase tracking-wider text-primary">Listado de Reservas ({selectedDate})</h2>
               
               {/* Status filter bar */}
-              <div className="flex items-center gap-1 bg-[#171311] border border-[#d4af37]/15 p-1 rounded text-[9px] uppercase font-bold text-[#8a7a6b]">
+              <div className="flex items-center gap-1 bg-card border border-primary/15 p-1 rounded-lg text-[9px] uppercase font-bold text-muted-foreground">
                 {['all', 'pending', 'confirmed', 'completed', 'cancelled'].map((filter) => (
                   <button
                     key={filter}
                     onClick={() => setStatusFilter(filter)}
                     className={`px-2 py-0.5 rounded transition-all ${
-                      statusFilter === filter ? 'bg-[#d4af37] text-[#1c1512]' : 'hover:text-[#f4efea]'
+                      statusFilter === filter ? 'bg-primary text-primary-foreground' : 'hover:text-foreground'
                     }`}
                   >
                     {filter === 'all' ? 'Ver todo' : filter === 'pending' ? 'Pendiente' : filter === 'confirmed' ? 'Confirmado' : filter === 'completed' ? 'Completado' : 'Cancelado'}
@@ -396,11 +396,11 @@ export default function AdminDashboard() {
 
             {loading ? (
               <div className="space-y-2">
-                <div className="h-16 bg-[#171311] border border-[#d4af37]/5 rounded animate-pulse" />
-                <div className="h-16 bg-[#171311] border border-[#d4af37]/5 rounded animate-pulse" />
+                <div className="h-16 bg-card border border-primary/10 rounded-xl animate-pulse" />
+                <div className="h-16 bg-card border border-primary/10 rounded-xl animate-pulse" />
               </div>
             ) : filteredBookings.length === 0 ? (
-              <div className="vintage-panel p-8 text-center text-[#8a7a6b] italic rounded-lg">
+              <div className="vintage-panel p-8 text-center text-muted-foreground italic rounded-lg">
                 Ninguna cita coincide con el filtro seleccionado.
               </div>
             ) : (
@@ -408,26 +408,26 @@ export default function AdminDashboard() {
                 {filteredBookings.map((booking) => (
                   <div 
                     key={booking.id}
-                    className="vintage-panel p-4 border-[#d4af37]/15 flex flex-col sm:flex-row sm:items-center justify-between hover:bg-[#1e1917] transition-colors gap-3"
+                    className="vintage-panel p-4 flex flex-col sm:flex-row sm:items-center justify-between hover:scale-[1.01] transition-transform gap-3"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-serif font-bold text-white uppercase">{booking.clientName}</span>
+                        <span className="text-sm font-sans font-extrabold text-primary uppercase">{booking.clientName}</span>
                         <span className={`text-[8px] font-bold px-2 py-0.5 border rounded uppercase tracking-wider ${
-                          booking.status === 'confirmed' ? 'border-[#d4af37]/35 text-[#d4af37] bg-[#d4af37]/5' :
-                          booking.status === 'completed' ? 'border-[#859f7d]/35 text-[#859f7d] bg-[#859f7d]/5' :
-                          booking.status === 'pending' ? 'border-[#d99f59]/35 text-[#d99f59] bg-[#d99f59]/5' :
-                          'border-[#ab4e46]/35 text-[#ab4e46] bg-[#ab4e46]/5'
+                          booking.status === 'confirmed' ? 'border-primary/30 text-primary bg-primary/5' :
+                          booking.status === 'completed' ? 'border-success/30 text-success bg-success/5' :
+                          booking.status === 'pending' ? 'border-accent/30 text-accent bg-accent/5' :
+                          'border-destructive/30 text-destructive bg-destructive/5'
                         }`}>
-                          {booking.status}
+                          {booking.status === 'confirmed' ? 'confirmado' : booking.status === 'completed' ? 'completado' : booking.status === 'pending' ? 'pendiente' : 'cancelado'}
                         </span>
                       </div>
                       
-                      <div className="text-[11px] text-[#bdae9e] flex flex-wrap items-center gap-3">
-                        <span className="text-[#d4af37] font-semibold">{booking.serviceName || 'Corte Clásico'}</span>
+                      <div className="text-[11px] text-muted-foreground flex flex-wrap items-center gap-3 font-medium">
+                        <span className="text-accent font-bold">{booking.serviceName || 'Corte Clásico'}</span>
                         <span>🕒 {booking.startTime} - {booking.endTime}</span>
                         <span>📞 {booking.clientPhone}</span>
-                        <span className="bg-[#110e0c] px-2 py-0.5 rounded text-[10px] text-[#bdae9e] border border-[#d4af37]/10 font-semibold">{booking.paymentMethod}</span>
+                        <span className="bg-primary/5 px-2 py-0.5 rounded text-[10px] text-primary border border-primary/10 font-bold">{booking.paymentMethod}</span>
                       </div>
                     </div>
 
@@ -435,7 +435,7 @@ export default function AdminDashboard() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => fetchHistory(booking.clientPhone)}
-                        className="p-2 bg-[#110e0c] hover:bg-[#171311] text-[#bdae9e] rounded border border-[#d4af37]/15 transition-all"
+                        className="p-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl border border-primary/20 transition-all"
                         title="Historial & Fidelidad del Cliente"
                       >
                         <History className="h-3.5 w-3.5" />
@@ -446,7 +446,7 @@ export default function AdminDashboard() {
                           setRescheduleBooking(booking);
                           setNewTime(booking.startTime);
                         }}
-                        className="p-2 bg-[#110e0c] hover:bg-[#171311] text-[#bdae9e] rounded border border-[#d4af37]/15 transition-all"
+                        className="p-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl border border-primary/20 transition-all"
                         title="Reagendar Cita"
                       >
                         <Clock className="h-3.5 w-3.5" />
@@ -456,7 +456,7 @@ export default function AdminDashboard() {
                         <button
                           onClick={() => handleUpdateStatus(booking.id!, 'confirmed', booking)}
                           disabled={actionLoading === booking.id}
-                          className="p-2 bg-[#859f7d]/10 text-[#859f7d] hover:bg-[#859f7d]/20 rounded border border-[#859f7d]/35 transition-all"
+                          className="p-2 bg-success/20 text-success hover:bg-success/30 rounded-xl border border-success/40 transition-all"
                           title="Confirmar Cita"
                         >
                           <Check className="h-3.5 w-3.5" />
@@ -467,7 +467,7 @@ export default function AdminDashboard() {
                         <button
                           onClick={() => handleUpdateStatus(booking.id!, 'completed', booking)}
                           disabled={actionLoading === booking.id}
-                          className="px-3 py-1.5 bg-[#859f7d] text-[#1c1512] font-bold text-[10px] hover:bg-[#96b08e] rounded transition-all uppercase flex items-center gap-1 shadow-md shadow-[#859f7d]/10"
+                          className="px-3 py-1.5 bg-success text-white font-bold text-[10px] hover:bg-success/90 rounded-xl transition-all uppercase flex items-center gap-1 shadow-md"
                         >
                           <CheckCircle2 className="h-3.5 w-3.5" /> Completar
                         </button>
@@ -477,7 +477,7 @@ export default function AdminDashboard() {
                         <button
                           onClick={() => handleUpdateStatus(booking.id!, 'cancelled', booking)}
                           disabled={actionLoading === booking.id}
-                          className="p-2 bg-[#ab4e46]/10 text-[#ab4e46] hover:bg-[#ab4e46]/20 rounded border border-[#ab4e46]/35 transition-all"
+                          className="p-2 bg-destructive/10 text-destructive hover:bg-destructive/20 rounded-xl border border-destructive/35 transition-all"
                           title="Cancelar Cita"
                         >
                           <X className="h-3.5 w-3.5" />
@@ -492,47 +492,47 @@ export default function AdminDashboard() {
 
           {/* AI Optimizer Recommendations Panel */}
           <div className="space-y-4">
-            <h2 className="text-xs font-serif uppercase tracking-wider text-[#d4af37] flex items-center gap-1.5">
-              <Sparkles className="h-4 w-4 text-[#d4af37]" /> Optimizador de Agenda IA
+            <h2 className="text-xs font-sans font-bold uppercase tracking-wider text-primary flex items-center gap-1.5">
+              <Sparkles className="h-4 w-4 text-primary" /> Optimizador de Agenda IA
             </h2>
 
-            <div className="vintage-panel p-5 border-[#d4af37]/15 space-y-4">
+            <div className="vintage-panel p-5 space-y-4">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] uppercase font-bold text-white tracking-wider">Continuidad del Día</span>
+                <span className="text-[10px] uppercase font-bold text-foreground tracking-wider">Continuidad del Día</span>
                 {metrics.continuity < 75 ? (
-                  <span className="text-[8px] bg-[#ab4e46]/10 text-[#ab4e46] border border-[#ab4e46]/25 px-2 py-0.5 rounded font-bold uppercase tracking-wider flex items-center gap-1 animate-pulse">
+                  <span className="text-[8px] bg-destructive/10 text-destructive border border-destructive/25 px-2 py-0.5 rounded font-bold uppercase tracking-wider flex items-center gap-1 animate-pulse">
                     ⚠️ Tiempos Muertos
                   </span>
                 ) : (
-                  <span className="text-[8px] bg-[#859f7d]/10 text-[#859f7d] border border-[#859f7d]/25 px-2 py-0.5 rounded font-bold uppercase tracking-wider">
+                  <span className="text-[8px] bg-success/10 text-success border border-success/25 px-2 py-0.5 rounded font-bold uppercase tracking-wider">
                     Agenda Compacta
                   </span>
                 )}
               </div>
 
-              <p className="text-xs text-[#bdae9e] leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 El motor analiza la continuidad de citas. Si detecta que un cliente está aislado o genera tiempos muertos, listará propuestas para reubicarlo.
               </p>
 
               {suggestions.length === 0 ? (
-                <div className="p-4 bg-[#110e0c] border border-dashed border-[#d4af37]/10 text-center text-xs text-[#8a7a6b] rounded-lg italic">
+                <div className="p-4 bg-background/60 border border-dashed border-primary/20 text-center text-xs text-muted-foreground rounded-lg italic">
                   No hay oportunidades de reagendamiento sugeridas para este día.
                 </div>
               ) : (
                 <div className="space-y-3">
                   {suggestions.map((sug, idx) => (
-                    <div key={idx} className="bg-[#d4af37]/5 border border-[#d4af37]/15 p-3.5 rounded space-y-2">
-                      <p className="text-[8px] font-bold text-[#d4af37] uppercase tracking-wider">💡 Propuesta de Reubicación</p>
-                      <p className="text-xs text-white">
-                        Mover a <span className="font-semibold">{sug.clientName}</span> de <span className="line-through text-[#8a7a6b]">{sug.currentSlot}</span> a las <span className="font-bold text-[#d4af37]">{sug.suggestedSlot}</span>.
+                    <div key={idx} className="bg-accent/10 border border-accent/25 p-3.5 rounded space-y-2">
+                      <p className="text-[8px] font-bold text-accent uppercase tracking-wider">💡 Propuesta de Reubicación</p>
+                      <p className="text-xs text-foreground">
+                        Mover a <span className="font-semibold">{sug.clientName}</span> de <span className="line-through text-muted-foreground">{sug.currentSlot}</span> a las <span className="font-bold text-primary">{sug.suggestedSlot}</span>.
                       </p>
-                      <p className="text-[10px] text-[#bdae9e] italic">{sug.reason}</p>
+                      <p className="text-[10px] text-muted-foreground italic">{sug.reason}</p>
                       <button
                         onClick={() => handleSendSuggestion(sug)}
                         disabled={actionLoading === `sug-${sug.bookingId}`}
-                        className="w-full mt-1.5 py-1.5 bg-[#171311] hover:bg-[#1e1917] border border-[#d4af37]/35 text-[#d4af37] rounded text-[10px] font-semibold transition-all flex items-center justify-center gap-1 uppercase tracking-wider"
+                        className="w-full mt-1.5 py-1.5 gold-btn text-[10px] rounded-lg"
                       >
-                        <Send className="h-3 w-3" />
+                        <Send className="h-3 w-3 inline mr-1" />
                         {actionLoading === `sug-${sug.bookingId}` ? 'Enviando...' : 'Enviar Sugerencia WhatsApp'}
                       </button>
                     </div>
@@ -545,8 +545,8 @@ export default function AdminDashboard() {
         </div>
       ) : calendarView === 'week' ? (
         /* Weekly calendar display */
-        <div className="vintage-panel p-6 border-[#d4af37]/15 space-y-4 animate-in fade-in duration-300">
-          <h2 className="text-xs font-serif uppercase tracking-wider text-[#d4af37]">Resumen Semanal</h2>
+        <div className="vintage-panel p-6 space-y-4 animate-in fade-in duration-300">
+          <h2 className="text-xs font-sans font-bold uppercase tracking-wider text-primary">Resumen Semanal</h2>
           <div className="grid grid-cols-2 sm:grid-cols-6 gap-3">
             {['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'].map((day, idx) => {
               const dateOffset = new Date(selectedDate + 'T00:00:00');
@@ -560,13 +560,13 @@ export default function AdminDashboard() {
                     setSelectedDate(dateStr);
                     setCalendarView('day');
                   }}
-                  className="p-4 bg-[#110e0c] border border-[#d4af37]/10 rounded hover:border-[#d4af37] transition-all text-left space-y-2 flex flex-col justify-between min-h-[90px]"
+                  className="p-4 bg-background/50 border-2 border-primary/15 rounded-xl hover:border-primary transition-all text-left space-y-2 flex flex-col justify-between min-h-[90px]"
                 >
                   <div>
-                    <span className="text-[9px] font-bold text-[#8a7a6b] uppercase tracking-wider">{day}</span>
-                    <p className="text-base font-serif font-bold text-white mt-1">{dateOffset.getDate()}</p>
+                    <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">{day}</span>
+                    <p className="text-base font-sans font-bold text-foreground mt-1">{dateOffset.getDate()}</p>
                   </div>
-                  <span className="text-[8px] text-[#d4af37] font-semibold bg-[#d4af37]/10 px-2 py-0.5 rounded border border-[#d4af37]/20 inline-block mt-2 uppercase">Ver agenda</span>
+                  <span className="text-[8px] text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded border border-primary/20 inline-block mt-2 uppercase">Ver agenda</span>
                 </button>
               );
             })}
@@ -574,9 +574,9 @@ export default function AdminDashboard() {
         </div>
       ) : (
         /* Monthly calendar grid view */
-        <div className="vintage-panel p-6 border-[#d4af37]/15 space-y-4 animate-in fade-in duration-300">
-          <h2 className="text-xs font-serif uppercase tracking-wider text-[#d4af37]">Vista de Mes Completo</h2>
-          <div className="grid grid-cols-7 gap-2 text-center text-[10px] uppercase font-bold text-[#8a7a6b] mb-2 border-b border-[#d4af37]/15 pb-2">
+        <div className="vintage-panel p-6 space-y-4 animate-in fade-in duration-300">
+          <h2 className="text-xs font-sans font-bold uppercase tracking-wider text-primary">Vista de Mes Completo</h2>
+          <div className="grid grid-cols-7 gap-2 text-center text-[10px] uppercase font-bold text-muted-foreground mb-2 border-b border-primary/15 pb-2">
             <span>Dom</span><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
           </div>
           <div className="grid grid-cols-7 gap-2">
@@ -596,14 +596,14 @@ export default function AdminDashboard() {
                     setSelectedDate(dateStr);
                     setCalendarView('day');
                   }}
-                  className={`p-3 rounded border text-left flex flex-col justify-between min-h-[64px] transition-all ${
-                    isCurrentDay ? 'bg-[#d4af37]/15 border-[#d4af37] text-white' :
-                    isSunday ? 'bg-[#0d0b0a] text-[#2b2320] border-transparent cursor-not-allowed' :
-                    'bg-[#110e0c] border-[#d4af37]/10 text-[#bdae9e] hover:border-[#d4af37]'
+                  className={`p-3 rounded-lg border text-left flex flex-col justify-between min-h-[64px] transition-all ${
+                    isCurrentDay ? 'bg-primary/15 border-primary text-foreground' :
+                    isSunday ? 'bg-background/30 text-muted-foreground/30 border-transparent cursor-not-allowed' :
+                    'bg-background/40 border-primary/10 text-foreground hover:border-primary'
                   }`}
                 >
                   <span className="text-[10px] font-bold">{dateOffset.getDate()}</span>
-                  {!isSunday && <span className="text-[8px] bg-[#171311] border border-[#d4af37]/10 text-[#d4af37] px-1 py-0.5 rounded mt-1 self-start font-mono">Ver</span>}
+                  {!isSunday && <span className="text-[8px] bg-primary/10 border border-primary/15 text-primary px-1 py-0.5 rounded mt-1 self-start font-mono">Ver</span>}
                 </button>
               );
             })}
@@ -613,52 +613,52 @@ export default function AdminDashboard() {
 
       {/* Customer History & Loyalty Modal */}
       {historyPhone && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
-          <div className="vintage-panel p-6 border-[#d4af37]/35 w-full max-w-md space-y-4 animate-in zoom-in duration-300 max-h-[85vh] flex flex-col">
-            <div className="flex justify-between items-center border-b border-[#d4af37]/25 pb-3">
+        <div className="fixed inset-0 bg-foreground/50 flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+          <div className="vintage-panel p-6 w-full max-w-md space-y-4 animate-in zoom-in duration-300 max-h-[85vh] flex flex-col">
+            <div className="flex justify-between items-center border-b border-primary/25 pb-3">
               <div>
-                <h3 className="text-sm font-serif font-bold text-[#d4af37] uppercase tracking-wider flex items-center gap-1.5">
+                <h3 className="text-sm font-sans font-bold text-primary uppercase tracking-wider flex items-center gap-1.5">
                   <History className="h-4 w-4" /> Historial & Fidelidad
                 </h3>
-                <p className="text-[10px] text-[#bdae9e] mt-0.5">Celular: {historyPhone}</p>
+                <p className="text-[10px] text-muted-foreground mt-0.5">Celular: {historyPhone}</p>
               </div>
-              <button onClick={() => setHistoryPhone(null)} className="text-[#8a7a6b] hover:text-white">✕</button>
+              <button onClick={() => setHistoryPhone(null)} className="text-muted-foreground hover:text-foreground text-lg leading-none">×</button>
             </div>
             
             {/* Stamp information if retrieved */}
             {clientLoyaltyData && (
-              <div className="bg-[#110e0c] p-3 rounded border border-[#d4af37]/15 space-y-2">
-                <p className="text-[9px] uppercase font-bold text-[#bdae9e] tracking-wider flex items-center gap-1">
-                  <Award className="h-3.5 w-3.5 text-[#d4af37]" /> Tarjeta de Fidelización
+              <div className="bg-background/60 p-3 rounded-xl border-2 border-primary/20 space-y-2">
+                <p className="text-[9px] uppercase font-bold text-muted-foreground tracking-wider flex items-center gap-1">
+                  <Award className="h-3.5 w-3.5 text-primary" /> Tarjeta de Fidelización
                 </p>
-                <div className="flex justify-between text-xs text-white">
+                <div className="flex justify-between text-xs text-foreground">
                   <span>Sellos acumulados:</span>
-                  <span className="text-[#d4af37] font-bold">{clientLoyaltyData.stamps} / {settings?.loyaltyVisitsRequired || 5}</span>
+                  <span className="text-primary font-bold">{clientLoyaltyData.stamps} / {settings?.loyaltyVisitsRequired || 5}</span>
                 </div>
-                <div className="flex justify-between text-xs text-white">
+                <div className="flex justify-between text-xs text-foreground">
                   <span>Visitas totales:</span>
-                  <span className="text-[#d4af37] font-bold">{clientLoyaltyData.totalVisits}</span>
+                  <span className="text-primary font-bold">{clientLoyaltyData.totalVisits}</span>
                 </div>
               </div>
             )}
 
             <div className="flex-1 overflow-y-auto space-y-2.5 pr-1">
               {loadingHistory ? (
-                <div className="text-center py-6 text-xs text-[#bdae9e] animate-pulse">Obteniendo historial...</div>
+                <div className="text-center py-6 text-xs text-muted-foreground animate-pulse">Obteniendo historial...</div>
               ) : clientHistory.length === 0 ? (
-                <div className="text-center py-6 text-xs text-[#8a7a6b] italic">Este cliente no registra reservas pasadas.</div>
+                <div className="text-center py-6 text-xs text-muted-foreground italic">Este cliente no registra reservas pasadas.</div>
               ) : (
                 clientHistory.map((h, i) => (
-                  <div key={i} className="p-3 bg-[#110e0c] border border-[#d4af37]/10 rounded flex justify-between items-center text-xs">
+                  <div key={i} className="p-3 bg-background/60 border-2 border-primary/15 rounded-xl flex justify-between items-center text-xs">
                     <div>
-                      <p className="font-semibold text-white font-serif uppercase tracking-wide text-[11px]">{h.serviceName || 'Corte Clásico'}</p>
-                      <p className="text-zinc-500 text-[10px]">{h.bookingDate} | {h.startTime} | Pago: {h.paymentMethod}</p>
+                      <p className="font-semibold text-foreground font-sans uppercase tracking-wide text-[11px]">{h.serviceName || 'Corte Clásico'}</p>
+                      <p className="text-muted-foreground text-[10px]">{h.bookingDate} | {h.startTime} | Pago: {h.paymentMethod}</p>
                     </div>
                     <span className={`text-[8px] font-bold px-2 py-0.5 rounded border uppercase ${
-                      h.status === 'confirmed' ? 'border-[#d4af37]/35 text-[#d4af37]' :
-                      h.status === 'completed' ? 'border-[#859f7d]/35 text-[#859f7d]' :
-                      h.status === 'pending' ? 'border-[#d99f59]/35 text-[#d99f59]' :
-                      'border-[#ab4e46]/35 text-[#ab4e46]'
+                      h.status === 'confirmed' ? 'border-primary/35 text-primary' :
+                      h.status === 'completed' ? 'border-success/35 text-success' :
+                      h.status === 'pending' ? 'border-warning/35 text-warning' :
+                      'border-destructive/35 text-destructive'
                     }`}>
                       {h.status}
                     </span>
@@ -672,27 +672,26 @@ export default function AdminDashboard() {
 
       {/* Reschedule Modal */}
       {rescheduleBooking && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
-          <div className="vintage-panel p-6 border-[#d4af37]/35 w-full max-w-sm space-y-4 animate-in zoom-in duration-300">
+        <div className="fixed inset-0 bg-foreground/50 flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+          <div className="vintage-panel p-6 w-full max-w-sm space-y-4 animate-in zoom-in duration-300">
             <div className="flex justify-between items-center">
-              <h3 className="text-sm font-serif font-bold text-[#d4af37] uppercase tracking-wider">Reagendar Cita</h3>
-              <button onClick={() => setRescheduleBooking(null)} className="text-[#8a7a6b] hover:text-white">✕</button>
+              <h3 className="text-sm font-sans font-bold text-primary uppercase tracking-wider">Reagendar Cita</h3>
+              <button onClick={() => setRescheduleBooking(null)} className="text-muted-foreground hover:text-foreground text-lg leading-none">×</button>
             </div>
             
             <form onSubmit={handleReschedule} className="space-y-4">
               <div className="space-y-2 text-xs">
-                <p className="text-[#bdae9e]">Cliente: <span className="text-white font-semibold font-serif uppercase">{rescheduleBooking.clientName}</span></p>
-                <p className="text-[#bdae9e]">Servicio: <span className="text-[#d4af37] font-semibold">{rescheduleBooking.serviceName || 'Corte Clásico'}</span></p>
-                <p className="text-[#bdae9e]">Hora actual: <span className="text-white font-semibold">{rescheduleBooking.startTime}</span></p>
+                <p className="text-muted-foreground">Cliente: <span className="text-foreground font-semibold font-sans uppercase">{rescheduleBooking.clientName}</span></p>
+                <p className="text-muted-foreground">Servicio: <span className="text-accent font-semibold">{rescheduleBooking.serviceName || 'Corte Clásico'}</span></p>
+                <p className="text-muted-foreground">Hora actual: <span className="text-foreground font-semibold">{rescheduleBooking.startTime}</span></p>
               </div>
 
               <div>
-                <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Nueva Hora de Inicio</label>
+                <label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider block mb-1">Nueva Hora de Inicio</label>
                 <select
                   value={newTime}
                   onChange={(e) => setNewTime(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded text-xs vintage-input"
-                  style={{ backgroundColor: '#110e0c', color: '#f4efea' }}
+                  className="w-full px-3 py-2.5 rounded-lg text-xs vip-input"
                 >
                   <option value="08:00">08:00 AM</option>
                   <option value="09:20">09:20 AM</option>
@@ -719,47 +718,46 @@ export default function AdminDashboard() {
 
       {/* Add Appointment Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
-          <div className="vintage-panel p-6 border-[#d4af37]/35 w-full max-w-sm space-y-4 animate-in zoom-in duration-300">
+        <div className="fixed inset-0 bg-foreground/50 flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+          <div className="vintage-panel p-6 w-full max-w-sm space-y-4 animate-in zoom-in duration-300">
             <div className="flex justify-between items-center">
-              <h3 className="text-sm font-serif font-bold text-[#d4af37] uppercase tracking-wider">Agregar Reserva Manual</h3>
-              <button onClick={() => setShowAddModal(false)} className="text-[#8a7a6b] hover:text-white">✕</button>
+              <h3 className="text-sm font-sans font-bold text-primary uppercase tracking-wider">Agregar Reserva Manual</h3>
+              <button onClick={() => setShowAddModal(false)} className="text-muted-foreground hover:text-foreground text-lg leading-none">×</button>
             </div>
             <form onSubmit={handleAddBooking} className="space-y-3.5">
               <div>
-                <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Nombre del Cliente</label>
+                <label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider block mb-1">Nombre del Cliente</label>
                 <input
                   type="text"
                   required
                   value={newClientName}
                   onChange={(e) => setNewClientName(e.target.value)}
                   placeholder="Ej: David Restrepo"
-                  className="w-full px-3 py-2 text-xs vintage-input"
+                  className="w-full px-3 py-2 text-xs vip-input"
                 />
               </div>
 
               <div>
-                <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Teléfono WhatsApp</label>
+                <label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider block mb-1">Teléfono WhatsApp</label>
                 <input
                   type="tel"
                   required
                   value={newClientPhone}
                   onChange={(e) => setNewClientPhone(e.target.value)}
                   placeholder="Ej: 3213016224"
-                  className="w-full px-3 py-2 text-xs vintage-input"
+                  className="w-full px-3 py-2 text-xs vip-input"
                 />
               </div>
 
               <div>
-                <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Servicio Elegido</label>
+                <label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider block mb-1">Servicio Elegido</label>
                 <select
                   value={newSelectedService?.id || ''}
                   onChange={(e) => {
                     const match = settings?.services?.find(s => s.id === e.target.value);
                     if (match) setNewSelectedService(match);
                   }}
-                  className="w-full px-3 py-2 text-xs vintage-input"
-                  style={{ backgroundColor: '#110e0c', color: '#f4efea' }}
+                  className="w-full px-3 py-2 text-xs vip-input"
                 >
                   {settings?.services?.map(s => (
                     <option key={s.id} value={s.id}>{s.name} ({s.duration} min)</option>
@@ -769,12 +767,11 @@ export default function AdminDashboard() {
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Hora Inicio</label>
+                  <label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider block mb-1">Hora Inicio</label>
                   <select
                     value={newStartTime}
                     onChange={(e) => setNewStartTime(e.target.value)}
-                    className="w-full px-3 py-2 text-xs vintage-input"
-                    style={{ backgroundColor: '#110e0c', color: '#f4efea' }}
+                    className="w-full px-3 py-2 text-xs vip-input"
                   >
                     <option value="08:00">08:00 AM</option>
                     <option value="09:20">09:20 AM</option>
@@ -788,18 +785,18 @@ export default function AdminDashboard() {
                 </div>
 
                 <div>
-                  <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Método Pago</label>
+                  <label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider block mb-1">Método Pago</label>
                   <select
                     value={newPaymentMethod}
                     onChange={(e: any) => setNewPaymentMethod(e.target.value)}
-                    className="w-full px-3 py-2 text-xs vintage-input"
-                    style={{ backgroundColor: '#110e0c', color: '#f4efea' }}
+                    className="w-full px-3 py-2 text-xs vip-input"
                   >
                     <option value="Nequi">Nequi</option>
                     <option value="Daviplata">Daviplata</option>
                     <option value="Llaves / Transfiya">Llaves / Transfiya</option>
-                    <option value="Transferencia Bancaria">Transf. Bancaria</option>
+                    <option value="Transferencia Bancaria">Transferencia Bancaria</option>
                     <option value="Efectivo">Efectivo</option>
+                    <option value="Otro">Otro</option>
                   </select>
                 </div>
               </div>
@@ -808,7 +805,7 @@ export default function AdminDashboard() {
                 type="submit"
                 className="w-full py-3 gold-btn uppercase tracking-wider text-xs"
               >
-                Insertar Reserva
+                Crear Reserva
               </button>
             </form>
           </div>

@@ -33,9 +33,15 @@ CREATE TABLE IF NOT EXISTS barber_settings (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 
-INSERT INTO barber_settings (id)
-VALUES ('default')
-ON CONFLICT (id) DO NOTHING;
+-- Insertar configuración inicial con el nombre correcto de la barbería
+INSERT INTO barber_settings (id, barber_name, loyalty_benefit)
+VALUES ('default', 'JR & Co.', 'Corte gratis o 50% de descuento en combo')
+ON CONFLICT (id) DO UPDATE
+  SET barber_name = EXCLUDED.barber_name,
+      loyalty_benefit = EXCLUDED.loyalty_benefit
+  WHERE barber_settings.barber_name = 'El Barbero'
+     OR barber_settings.barber_name = 'La Elegante Barbería'
+     OR barber_settings.barber_name = 'Juan Rairan';
 
 -- 2. Tabla de clientes con perfil y fidelidad
 CREATE TABLE IF NOT EXISTS clients (

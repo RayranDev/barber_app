@@ -62,7 +62,7 @@ function ScissorsTransition({ visible }: { visible: boolean }) {
           <line x1="14.47" y1="14.48" x2="20" y2="20" />
           <line x1="8.12" y1="8.12" x2="12" y2="12" />
         </svg>
-        <p className="text-[#FDF7EE] text-xs uppercase tracking-widest font-serif font-bold">Juan Rairan</p>
+        <p className="text-[#FDF7EE] text-xs uppercase tracking-widest font-serif font-bold">JR &amp; CO.</p>
       </div>
     </div>
   );
@@ -278,7 +278,8 @@ export default function Home() {
     }
   };
 
-  const currentBarberName = 'Juan Rairan';
+  const currentBarberName = settings?.barberName || 'JR & Co.';
+  const [receiptPreview, setReceiptPreview] = useState<string | null>(null);
 
   return (
     <div className="flex-1 w-full max-w-md mx-auto px-4 py-6 flex flex-col justify-between min-h-screen text-primary">
@@ -754,20 +755,51 @@ export default function Home() {
                         )}
                       </div>
 
-                      {/* Mock Uploader */}
+                      {/* Functional Receipt Image Uploader */}
                       <div>
-                        <button
-                          type="button"
-                          onClick={() => setReceiptUploaded(true)}
-                          className={`w-full py-2.5 border-2 border-dashed rounded-lg flex items-center justify-center gap-2 text-xs transition-all ${
-                            receiptUploaded 
-                              ? 'border-success/50 bg-success/10 text-success' 
-                              : 'border-primary/25 hover:border-primary/50 text-muted-foreground'
-                          }`}
-                        >
-                          <Upload className="h-3.5 w-3.5" />
-                          {receiptUploaded ? '¡Comprobante Cargado!' : 'Sube foto del comprobante'}
-                        </button>
+                        <label className={`w-full py-2.5 px-4 border-2 border-dashed rounded-lg flex flex-col items-center justify-center gap-1.5 text-xs transition-all cursor-pointer ${
+                          receiptUploaded 
+                            ? 'border-success/50 bg-success/5' 
+                            : 'border-primary/25 hover:border-primary/50 bg-primary/4'
+                        } text-muted-foreground`}>
+                          <div className="flex items-center gap-2">
+                            <Upload className="h-4 w-4 text-primary" />
+                            <span className="font-bold">
+                              {receiptUploaded ? '¡Comprobante Listo!' : 'Selecciona foto del comprobante'}
+                            </span>
+                          </div>
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            className="hidden" 
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                setReceiptUploaded(true);
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                  setReceiptPreview(reader.result as string);
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }}
+                          />
+                          {receiptUploaded && (
+                            <span className="text-[10px] text-success font-semibold bg-success/10 px-2 py-0.5 rounded border border-success/20">
+                              ✓ Captura cargada correctamente
+                            </span>
+                          )}
+                        </label>
+                        {receiptPreview && (
+                          <div className="mt-2 rounded-lg overflow-hidden border-2 border-success/30 relative">
+                            <img src={receiptPreview} alt="Comprobante" className="w-full max-h-40 object-cover" />
+                            <button
+                              type="button"
+                              onClick={() => { setReceiptPreview(null); setReceiptUploaded(false); }}
+                              className="absolute top-1 right-1 bg-destructive/80 text-white text-[9px] font-bold px-2 py-0.5 rounded hover:bg-destructive transition-all"
+                            >Quitar</button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ) : (

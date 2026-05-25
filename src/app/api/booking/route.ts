@@ -40,6 +40,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Evitar reservas dobles: verificar solapamiento de rangos de tiempo
+    const existingBookings = await getBookingsByDate(bookingDate);
+    
+    const toMinutes = (t: string) => {
+      const [h, m] = t.split(':').map(Number);
+      return h * 60 + m;
+    };
+    const newStart = toMinutes(startTime);
+    const newEnd = toMinutes(endTime);
+    
+    // Hay conflicto si el nuevo rango solapa con cualquier cita activa (no cancelada)
+    const hasConflict = existingBookings.some(b => {
+      if (b.status === 'cancelled' || b.status === 'rejected') return false;
+      const bStart = toMinutes(b.startTime);
+      const bEnd = toMinutes(b.endTime);
+      // Solapamiento: nuevo inicio < fin existente Y nuevo fin > inicio existente
+      return newStart < bEnd && newEnd > bStart;
+    });
+
+    if (hasConflict) {
+      return NextResponse.json(
+        { success: false, error: 'Este espacio ya está reservado o hay un traslape de horario. Por favor elige otro.' },
+        { status: 409 }
+      );
+    }
+
     const booking = await createBooking({
       clientName,
       clientPhone,

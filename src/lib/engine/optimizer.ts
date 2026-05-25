@@ -33,7 +33,7 @@ export interface Booking {
   startTime: string;
   endTime: string;
   status: 'pending' | 'confirmed' | 'rejected' | 'cancelled' | 'completed';
-  paymentMethod: 'Nequi' | 'Daviplata' | 'Transferencia Bancaria' | 'Efectivo' | 'Otro';
+  paymentMethod: 'Nequi' | 'Daviplata' | 'Llaves / Transfiya' | 'Transferencia Bancaria' | 'Efectivo' | 'Otro';
   paymentReceiptUrl?: string;
 }
 
@@ -109,30 +109,32 @@ export function computeSmartSlots(
 ): TimeSlot[] {
   if (baseSlots.length === 0) return [];
 
-  // Mapa de citas activas por hora
-  const bookingsMap = new Map<string, Booking>();
-  bookings.forEach(b => {
-    if (b.status === 'confirmed' || b.status === 'pending' || b.status === 'completed') {
-      bookingsMap.set(b.startTime, b);
-    }
-  });
+  // Citas activas (no canceladas ni rechazadas)
+  const activeBookings = bookings.filter(b =>
+    b.status === 'confirmed' || b.status === 'pending' || b.status === 'completed'
+  );
 
+  // Marca slots que solapen con alguna cita activa
   const processedSlots = baseSlots.map(slot => {
     if (slot.status === 'lunch') return slot;
-    
-    const booking = bookingsMap.get(slot.time);
-    if (booking) {
-      let finalStatus: TimeSlot['status'] = 'confirmed';
-      if (booking.status === 'pending') finalStatus = 'pending';
-      if (booking.status === 'completed') finalStatus = 'completed';
 
-      return {
-        ...slot,
-        status: finalStatus,
-        probabilityScore: 100,
-        efficiencyScore: 100
-      };
+    const slotStart = timeToMinutes(slot.time);
+    const slotEnd = timeToMinutes(slot.endTime);
+
+    const overlappingBooking = activeBookings.find(b => {
+      const bStart = timeToMinutes(b.startTime);
+      const bEnd = timeToMinutes(b.endTime);
+      // Hay solapamiento si el slot empieza antes de que termine la cita Y termina después de que empieza
+      return slotStart < bEnd && slotEnd > bStart;
+    });
+
+    if (overlappingBooking) {
+      let finalStatus: TimeSlot['status'] = 'confirmed';
+      if (overlappingBooking.status === 'pending') finalStatus = 'pending';
+      if (overlappingBooking.status === 'completed') finalStatus = 'completed';
+      return { ...slot, status: finalStatus, probabilityScore: 100, efficiencyScore: 100 };
     }
+
     return slot;
   });
 

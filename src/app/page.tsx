@@ -341,37 +341,37 @@ export default function Home() {
       {/* Main Container */}
       <main className="flex-1 flex flex-col justify-center">
         {bookingSuccess ? (
-          <div className="vip-panel p-6 border-[#C8A96B]/40 text-center animate-in fade-in zoom-in duration-300 space-y-6">
-            <div className="inline-flex items-center justify-center p-3 rounded-full bg-[#C8A96B]/10 border border-[#C8A96B]/30">
-              <Award className="h-10 w-10 text-[#C8A96B] animate-pulse" />
+          <div className="vip-panel p-6 text-center animate-in fade-in zoom-in duration-300 space-y-6">
+            <div className="inline-flex items-center justify-center p-3 rounded-full bg-primary/10 border border-primary/30">
+              <Award className="h-10 w-10 text-primary animate-pulse" />
             </div>
             <div>
-              <h2 className="text-xl font-serif text-[#C8A96B] uppercase tracking-wide">¡Reserva Solicitada!</h2>
-              <p className="text-xs text-[#bdae9e] mt-2">
-                Tu cita ha quedado pre-agendada en **JR & Co. Barber**. Te hemos notificado por WhatsApp. Validaremos tu transferencia a la brevedad.
+              <h2 className="text-xl font-sans font-extrabold text-primary uppercase tracking-wide">¡Reserva Solicitada!</h2>
+              <p className="text-xs text-muted-foreground mt-2">
+                Tu cita ha quedado pre-agendada en JR &amp; Co. Barber. Te notificaremos por WhatsApp y validaremos tu transferencia a la brevedad.
               </p>
             </div>
             
-            <div className="bg-[#121212] rounded-xl p-4 text-left border border-[#C8A96B]/15 space-y-2 text-xs">
-              <div className="flex justify-between border-b border-[#2B2B2B] pb-1">
-                <span className="text-[#a39f96]">Cliente:</span>
-                <span className="text-white font-medium">{clientName}</span>
+            <div className="bg-card rounded-xl p-4 text-left border-2 border-primary/20 space-y-2 text-xs">
+              <div className="flex justify-between border-b border-primary/10 pb-1">
+                <span className="text-muted-foreground font-medium">Cliente:</span>
+                <span className="text-foreground font-semibold">{clientName}</span>
               </div>
-              <div className="flex justify-between border-b border-[#2B2B2B] pb-1">
-                <span className="text-[#a39f96]">Servicio:</span>
-                <span className="text-[#C8A96B] font-semibold">{selectedService?.name}</span>
+              <div className="flex justify-between border-b border-primary/10 pb-1">
+                <span className="text-muted-foreground font-medium">Servicio:</span>
+                <span className="text-accent font-bold">{selectedService?.name}</span>
               </div>
-              <div className="flex justify-between border-b border-[#2B2B2B] pb-1">
-                <span className="text-[#a39f96]">Fecha:</span>
-                <span className="text-white font-medium">{selectedDate}</span>
+              <div className="flex justify-between border-b border-primary/10 pb-1">
+                <span className="text-muted-foreground font-medium">Fecha:</span>
+                <span className="text-foreground font-semibold">{selectedDate}</span>
               </div>
-              <div className="flex justify-between border-b border-[#2B2B2B] pb-1">
-                <span className="text-[#a39f96]">Hora de Inicio:</span>
-                <span className="text-white font-medium">{selectedSlot?.time}</span>
+              <div className="flex justify-between border-b border-primary/10 pb-1">
+                <span className="text-muted-foreground font-medium">Hora de Inicio:</span>
+                <span className="text-foreground font-semibold">{selectedSlot?.time}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#a39f96]">Método de Pago:</span>
-                <span className="text-white font-medium">{paymentMethod}</span>
+                <span className="text-muted-foreground font-medium">Método de Pago:</span>
+                <span className="text-foreground font-semibold">{paymentMethod}</span>
               </div>
             </div>
 
@@ -442,19 +442,19 @@ export default function Home() {
             {activeStep === 1 && (
               <div className="space-y-4 animate-in fade-in duration-200">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[#C8A96B] font-serif">
+                  <div className="flex items-center gap-2 text-primary">
                     <Scissors className="h-4.5 w-4.5" />
-                    <span className="text-sm uppercase tracking-wider">Paso 1: Selecciona un Servicio</span>
+                    <span className="text-sm font-bold uppercase tracking-wider">Paso 1: Servicio</span>
                   </div>
                   <button 
                     type="button"
                     onClick={prevStep}
-                    className="text-xs text-[#a39f96] hover:underline"
+                    className="text-xs text-muted-foreground hover:text-primary hover:underline transition-colors"
                   >
                     Atrás
                   </button>
                 </div>
-                <p className="text-[11px] text-[#a39f96] italic">Cuidado exclusivo para ejecutivos. El precio varía según el cliente y se acuerda al asistir.</p>
+                <p className="text-[11px] text-muted-foreground italic">El precio se acuerda en la cita, varía según el cliente y el trabajo.</p>
                 
                 <div className="space-y-2.5">
                   {settings?.services?.map((service) => (
@@ -462,22 +462,26 @@ export default function Home() {
                       type="button"
                       key={service.id}
                       onClick={() => setSelectedService(service)}
-                      className={`w-full text-left p-4 rounded-2xl transition-all border flex justify-between items-center ${
+                      className={`w-full text-left p-4 rounded-2xl transition-all border-2 flex justify-between items-center ${
                         selectedService?.id === service.id
-                          ? 'bg-[#2B2B2B] border-[#C8A96B] shadow-[inset_0_0_10px_rgba(200,169,107,0.1)]'
-                          : 'bg-[#2B2B2B]/40 border-[#C8A96B]/10 hover:border-[#C8A96B]/30'
+                          ? 'bg-primary border-primary text-primary-foreground shadow-lg'
+                          : 'bg-card border-primary/20 hover:border-primary/50'
                       }`}
                     >
                       <div>
-                        <h3 className="text-xs font-serif uppercase tracking-wider text-[#F5F1E8] font-bold">
+                        <h3 className={`text-xs font-bold uppercase tracking-wider ${
+                          selectedService?.id === service.id ? 'text-primary-foreground' : 'text-foreground'
+                        }`}>
                           {service.name}
                         </h3>
-                        <p className="text-[10px] text-[#a39f96] mt-1 flex items-center gap-1">
-                          <Clock className="h-3 w-3 text-[#C8A96B]" /> {service.duration} minutos de servicio VIP
+                        <p className={`text-[10px] mt-1 flex items-center gap-1 ${
+                          selectedService?.id === service.id ? 'text-primary-foreground/70' : 'text-muted-foreground'
+                        }`}>
+                          <Clock className="h-3 w-3" /> {service.duration} min
                         </p>
                       </div>
                       {selectedService?.id === service.id && (
-                        <span className="h-2 w-2 rounded-full bg-[#C8A96B] shadow-[0_0_8px_#C8A96B]"></span>
+                        <span className="h-2.5 w-2.5 rounded-full bg-primary-foreground"></span>
                       )}
                     </button>
                   ))}
@@ -497,14 +501,14 @@ export default function Home() {
             {activeStep === 2 && (
               <div className="space-y-4 animate-in fade-in duration-200">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[#C8A96B] font-serif">
+                  <div className="flex items-center gap-2 text-primary">
                     <Calendar className="h-4.5 w-4.5" />
-                    <span className="text-sm uppercase tracking-wider">Paso 2: Selecciona la Fecha</span>
+                    <span className="text-sm font-bold uppercase tracking-wider">Paso 2: Fecha</span>
                   </div>
                   <button 
                     type="button"
                     onClick={prevStep}
-                    className="text-xs text-[#a39f96] hover:underline"
+                    className="text-xs text-muted-foreground hover:text-primary hover:underline transition-colors"
                   >
                     Atrás
                   </button>
@@ -519,14 +523,14 @@ export default function Home() {
                         setSelectedDate(d.dateStr);
                         setSelectedSlot(null);
                       }}
-                      className={`flex flex-col items-center justify-center p-3.5 rounded-2xl transition-all border ${
+                      className={`flex flex-col items-center justify-center p-3.5 rounded-2xl transition-all border-2 ${
                         selectedDate === d.dateStr
-                          ? 'bg-[#2B2B2B] border-[#C8A96B] text-white shadow-[0_0_12px_rgba(200,169,107,0.15)]'
-                          : 'bg-[#2B2B2B]/40 border-[#C8A96B]/10 text-[#a39f96] hover:border-[#C8A96B]/35'
+                          ? 'bg-primary border-primary text-primary-foreground shadow-lg'
+                          : 'bg-card border-primary/20 text-muted-foreground hover:border-primary/50'
                       }`}
                     >
-                      <span className="text-[9px] uppercase tracking-wider font-semibold">{d.dayName}</span>
-                      <span className="text-base font-serif font-bold mt-1">{d.dayNum}</span>
+                      <span className="text-[9px] uppercase tracking-wider font-bold">{d.dayName}</span>
+                      <span className="text-base font-bold mt-1">{d.dayNum}</span>
                     </button>
                   ))}
                 </div>
@@ -545,14 +549,14 @@ export default function Home() {
             {activeStep === 3 && (
               <div className="space-y-4 animate-in fade-in duration-200">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[#C8A96B] font-serif">
+                  <div className="flex items-center gap-2 text-primary">
                     <Clock className="h-4.5 w-4.5" />
-                    <span className="text-sm uppercase tracking-wider">Paso 3: Elige tu Hora</span>
+                    <span className="text-sm font-bold uppercase tracking-wider">Paso 3: Horario</span>
                   </div>
                   <button 
                     type="button"
                     onClick={prevStep}
-                    className="text-xs text-[#a39f96] hover:underline"
+                    className="text-xs text-muted-foreground hover:text-primary hover:underline transition-colors"
                   >
                     Atrás
                   </button>
@@ -561,11 +565,11 @@ export default function Home() {
                 {loading ? (
                   <div className="grid grid-cols-3 gap-2">
                     {[...Array(6)].map((_, i) => (
-                      <div key={i} className="h-10 bg-[#2B2B2B]/40 border border-[#C8A96B]/5 rounded-xl animate-pulse" />
+                      <div key={i} className="h-10 bg-primary/10 border border-primary/15 rounded-xl animate-pulse" />
                     ))}
                   </div>
                 ) : slots.length === 0 ? (
-                  <div className="text-center py-8 bg-[#2B2B2B]/35 border border-[#C8A96B]/10 rounded-2xl text-xs text-[#a39f96] italic">
+                  <div className="text-center py-8 bg-card border-2 border-primary/15 rounded-2xl text-xs text-muted-foreground italic">
                     La barbería está cerrada o no labora el {selectedDate}.
                   </div>
                 ) : (
@@ -574,21 +578,21 @@ export default function Home() {
                       const isOccupied = slot.status === 'confirmed' || slot.status === 'pending' || slot.status === 'completed';
                       const isLunch = slot.status === 'lunch';
                       
-                      let borderClass = 'border-[#C8A96B]/15 bg-[#2B2B2B]/40 text-[#F5F1E8] hover:border-[#C8A96B]/35';
+                      let borderClass = 'border-primary/20 bg-card text-foreground hover:border-primary/50';
                       let badge = null;
 
                       if (slot.status === 'recommended') {
-                        borderClass = 'border-[#C8A96B]/45 bg-[#C8A96B]/5 text-[#C8A96B] hover:border-[#C8A96B]';
-                        badge = <span className="absolute -top-1.5 -right-1 bg-[#C8A96B] text-[7px] font-bold px-1.5 py-0.5 rounded text-[#121212] tracking-wide uppercase animate-pulse">IA</span>;
+                        borderClass = 'border-accent bg-accent/10 text-accent font-bold hover:bg-accent/20';
+                        badge = <span className="absolute -top-1.5 -right-1 bg-accent text-[7px] font-bold px-1.5 py-0.5 rounded text-white tracking-wide uppercase animate-pulse">IA</span>;
                       } else if (slot.status === 'premium') {
-                        borderClass = 'border-[#C8A96B]/30 bg-[#2B2B2B]/60 text-[#C8A96B]/80 hover:border-[#C8A96B]';
-                        badge = <span className="absolute -top-1.5 -right-1 bg-[#C8A96B]/70 text-[7px] font-bold px-1.5 py-0.5 rounded text-[#121212] tracking-wide uppercase">Top</span>;
+                        borderClass = 'border-primary/40 bg-primary/5 text-primary hover:border-primary';
+                        badge = <span className="absolute -top-1.5 -right-1 bg-primary text-[7px] font-bold px-1.5 py-0.5 rounded text-primary-foreground tracking-wide uppercase">Top</span>;
                       } else if (isOccupied || isLunch) {
-                        borderClass = 'border-white/5 bg-[#121212]/90 text-[#a39f96]/30 line-through cursor-not-allowed';
+                        borderClass = 'border-primary/8 bg-primary/5 text-muted-foreground/40 line-through cursor-not-allowed';
                       }
 
                       if (selectedSlot?.time === slot.time) {
-                        borderClass = 'border-[#C8A96B] bg-[#C8A96B] text-[#121212] font-extrabold shadow-[0_0_12px_rgba(200,169,107,0.4)] scale-95';
+                        borderClass = 'border-primary bg-primary text-primary-foreground font-extrabold shadow-lg scale-95';
                       }
 
                       return (
@@ -600,7 +604,7 @@ export default function Home() {
                             setSelectedSlot(slot);
                             setErrorMsg('');
                           }}
-                          className={`relative py-3 px-1 rounded-xl text-center text-xs font-bold transition-all border ${borderClass}`}
+                          className={`relative py-3 px-1 rounded-xl text-center text-xs font-bold transition-all border-2 ${borderClass}`}
                         >
                           {slot.time}
                           {badge}
@@ -612,8 +616,8 @@ export default function Home() {
 
                 {/* Intelligent recommendation explanation */}
                 {selectedSlot?.label && (
-                  <div className="flex items-center gap-2 text-xs bg-[#C8A96B]/5 border border-[#C8A96B]/15 text-[#C8A96B] p-3 rounded-xl italic">
-                    <Sparkles className="h-4 w-4 shrink-0 text-[#C8A96B]" />
+                  <div className="flex items-center gap-2 text-xs bg-accent/10 border border-accent/30 text-accent p-3 rounded-xl italic">
+                    <Sparkles className="h-4 w-4 shrink-0" />
                     <span>{selectedSlot.label}</span>
                   </div>
                 )}
@@ -634,35 +638,35 @@ export default function Home() {
             {activeStep === 4 && selectedSlot && selectedService && (
               <form onSubmit={handleBookingSubmit} className="space-y-4 animate-in fade-in duration-200">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[#C8A96B] font-serif">
+                  <div className="flex items-center gap-2 text-primary">
                     <CreditCard className="h-4.5 w-4.5" />
-                    <span className="text-sm uppercase tracking-wider">Paso 4: Confirmación VIP</span>
+                    <span className="text-sm font-bold uppercase tracking-wider">Paso 4: Confirmación</span>
                   </div>
                   <button 
                     type="button"
                     onClick={prevStep}
-                    className="text-xs text-[#a39f96] hover:underline"
+                    className="text-xs text-muted-foreground hover:text-primary hover:underline transition-colors"
                   >
                     Atrás
                   </button>
                 </div>
 
-                <div className="vip-panel p-5 border-[#C8A96B]/20 space-y-4">
+                <div className="vip-panel p-5 space-y-4">
                   {/* Summary */}
-                  <div className="bg-[#121212] p-4 rounded-xl border border-[#C8A96B]/15 text-xs">
-                    <p className="text-[#a39f96] text-[10px] uppercase font-bold tracking-wider">Reserva Ejecutiva:</p>
-                    <p className="text-[#F5F1E8] mt-1 font-serif text-sm font-semibold">
+                  <div className="bg-primary/8 p-4 rounded-xl border-2 border-primary/20 text-xs">
+                    <p className="text-muted-foreground text-[10px] uppercase font-bold tracking-wider">Tu Reserva:</p>
+                    <p className="text-foreground mt-1 font-bold text-sm">
                       {selectedService.name}
                     </p>
-                    <p className="text-[#a39f96] mt-0.5">
-                      {selectedDate} a las <span className="text-[#C8A96B] font-bold">{selectedSlot.time}</span> ({selectedService.duration} min)
+                    <p className="text-muted-foreground mt-0.5">
+                      {selectedDate} a las <span className="text-primary font-bold">{selectedSlot.time}</span> ({selectedService.duration} min)
                     </p>
                   </div>
 
                   {/* Client Data */}
                   <div className="space-y-3">
                     <div>
-                      <label className="text-[9px] font-medium text-[#a39f96] uppercase tracking-wider block mb-1">Tu Nombre Completo</label>
+                      <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">Tu Nombre Completo</label>
                       <div className="relative">
                         <input
                           type="text"
@@ -672,12 +676,12 @@ export default function Home() {
                           placeholder="Ej: Sebastián Ospina"
                           className="w-full pl-9 pr-3.5 py-2.5 rounded-lg text-xs vip-input"
                         />
-                        <User className="absolute left-3 top-3 h-3.5 w-3.5 text-[#a39f96]" />
+                        <User className="absolute left-3 top-3 h-3.5 w-3.5 text-muted-foreground" />
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-[9px] font-medium text-[#a39f96] uppercase tracking-wider block mb-1">WhatsApp Celular</label>
+                      <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">WhatsApp Celular</label>
                       <div className="relative">
                         <input
                           type="tel"
@@ -687,67 +691,66 @@ export default function Home() {
                           placeholder="Ej: 3213016224"
                           className="w-full pl-9 pr-3.5 py-2.5 rounded-lg text-xs vip-input"
                         />
-                        <Phone className="absolute left-3 top-3 h-3.5 w-3.5 text-[#a39f96]" />
+                        <Phone className="absolute left-3 top-3 h-3.5 w-3.5 text-muted-foreground" />
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-[9px] font-medium text-[#a39f96] uppercase tracking-wider block mb-1">Método de Garantía / Pago</label>
+                      <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">Método de Pago / Garantía</label>
                       <select
                         value={paymentMethod}
                         onChange={(e) => {
                           setPaymentMethod(e.target.value);
                           setReceiptUploaded(false);
                         }}
-                        style={{ backgroundColor: '#121212', color: '#F5F1E8' }}
-                        className="w-full px-3.5 py-2.5 rounded-lg text-xs vip-input border-[#C8A96B]/30 focus:border-[#C8A96B]"
+                        className="w-full px-3.5 py-2.5 rounded-lg text-xs vip-input"
                       >
-                        <option value="Nequi" style={{ backgroundColor: '#121212', color: '#F5F1E8' }}>Nequi</option>
-                        <option value="Daviplata" style={{ backgroundColor: '#121212', color: '#F5F1E8' }}>Daviplata</option>
-                        <option value="Llaves / Transfiya" style={{ backgroundColor: '#121212', color: '#F5F1E8' }}>Llaves / Transfiya</option>
-                        <option value="Transferencia Bancaria" style={{ backgroundColor: '#121212', color: '#F5F1E8' }}>Transferencia Bancaria</option>
-                        <option value="Efectivo" style={{ backgroundColor: '#121212', color: '#F5F1E8' }}>Efectivo en Barbería</option>
-                        <option value="Otro" style={{ backgroundColor: '#121212', color: '#F5F1E8' }}>Otro</option>
+                        <option value="Nequi">Nequi</option>
+                        <option value="Daviplata">Daviplata</option>
+                        <option value="Llaves / Transfiya">Llaves / Transfiya</option>
+                        <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+                        <option value="Efectivo">Efectivo en Barbería</option>
+                        <option value="Otro">Otro</option>
                       </select>
                     </div>
                   </div>
 
                   {/* Payment accounts detail */}
                   {paymentMethod !== 'Efectivo' ? (
-                    <div className="bg-[#121212] rounded-xl p-4 border border-[#C8A96B]/15 space-y-3">
-                      <div className="flex items-center gap-1.5 text-xs text-[#C8A96B] font-semibold bg-[#C8A96B]/5 p-2 rounded-lg">
+                    <div className="bg-card rounded-xl p-4 border-2 border-primary/20 space-y-3">
+                      <div className="flex items-center gap-1.5 text-xs text-foreground font-bold bg-accent/15 p-2 rounded-lg">
                         <span>💰 Garantía de Cita: $5.000 COP</span>
                       </div>
 
                       <div className="space-y-2 text-xs">
-                        <p className="font-semibold text-[#a39f96] uppercase tracking-wider text-[9px]">Cuentas de Transferencia:</p>
+                        <p className="font-bold text-muted-foreground uppercase tracking-wider text-[9px]">Cuentas de Transferencia:</p>
                         
                         {(paymentMethod === 'Nequi' || paymentMethod === 'Daviplata') && (
-                          <div className="p-3 bg-[#2B2B2B]/40 border border-[#C8A96B]/10 rounded-lg animate-in fade-in">
-                            <p className="text-[#a39f96] font-serif text-[10px] uppercase font-bold">Nequi y Daviplata</p>
-                            <p className="font-bold text-white text-base mt-1 tracking-wider">321 301 6224</p>
-                            <p className="text-[9px] text-[#a39f96] mt-1">Envía tu transferencia a este celular.</p>
+                          <div className="p-3 bg-primary/8 border-2 border-primary/15 rounded-lg animate-in fade-in">
+                            <p className="text-muted-foreground text-[10px] uppercase font-bold">Nequi y Daviplata</p>
+                            <p className="font-bold text-foreground text-base mt-1 tracking-wider">321 301 6224</p>
+                            <p className="text-[9px] text-muted-foreground mt-1">Envía tu transferencia a este celular.</p>
                           </div>
                         )}
 
                         {paymentMethod === 'Llaves / Transfiya' && (
-                          <div className="p-3 bg-[#2B2B2B]/40 border border-[#C8A96B]/10 rounded-lg animate-in fade-in">
-                            <p className="text-[#a39f96] font-serif text-[10px] uppercase font-bold">Llaves / Transfiya</p>
-                            <p className="font-bold text-white text-base mt-1 tracking-wider">@davi3213016224</p>
-                            <p className="text-[9px] text-[#a39f96] mt-1">Transfiya usando nuestra llave única.</p>
+                          <div className="p-3 bg-primary/8 border-2 border-primary/15 rounded-lg animate-in fade-in">
+                            <p className="text-muted-foreground text-[10px] uppercase font-bold">Llaves / Transfiya</p>
+                            <p className="font-bold text-foreground text-base mt-1 tracking-wider">@davi3213016224</p>
+                            <p className="text-[9px] text-muted-foreground mt-1">Transfiya usando nuestra llave única.</p>
                           </div>
                         )}
 
                         {paymentMethod === 'Transferencia Bancaria' && (
-                          <div className="p-3 bg-[#2B2B2B]/40 border border-[#C8A96B]/10 rounded-lg text-[11px] text-[#a39f96] space-y-1 animate-in fade-in">
-                            <p className="text-[#C8A96B] font-bold">Bancolombia Ahorros</p>
-                            <p>Número: <span className="text-white font-bold">123-456789-01</span></p>
-                            <p>A nombre de: <span className="text-white">JR & Co. Barber</span></p>
+                          <div className="p-3 bg-primary/8 border-2 border-primary/15 rounded-lg text-xs text-muted-foreground space-y-1 animate-in fade-in">
+                            <p className="text-accent font-bold">Bancolombia Ahorros</p>
+                            <p>Número: <span className="text-foreground font-bold">123-456789-01</span></p>
+                            <p>A nombre de: <span className="text-foreground font-semibold">JR &amp; Co. Barber</span></p>
                           </div>
                         )}
 
                         {paymentMethod === 'Otro' && (
-                          <p className="text-[10px] text-[#a39f96] italic">Coordina con tu barbero al WhatsApp.</p>
+                          <p className="text-[10px] text-muted-foreground italic">Coordina con tu barbero al WhatsApp.</p>
                         )}
                       </div>
 
@@ -756,10 +759,10 @@ export default function Home() {
                         <button
                           type="button"
                           onClick={() => setReceiptUploaded(true)}
-                          className={`w-full py-2.5 border border-dashed rounded-lg flex items-center justify-center gap-2 text-xs transition-all ${
+                          className={`w-full py-2.5 border-2 border-dashed rounded-lg flex items-center justify-center gap-2 text-xs transition-all ${
                             receiptUploaded 
-                              ? 'border-[#6e8c68]/40 bg-[#6e8c68]/5 text-[#6e8c68]' 
-                              : 'border-[#C8A96B]/20 hover:border-[#C8A96B]/40 text-[#a39f96]'
+                              ? 'border-success/50 bg-success/10 text-success' 
+                              : 'border-primary/25 hover:border-primary/50 text-muted-foreground'
                           }`}
                         >
                           <Upload className="h-3.5 w-3.5" />
@@ -768,9 +771,9 @@ export default function Home() {
                       </div>
                     </div>
                   ) : (
-                    <div className="bg-[#C8A96B]/5 rounded-xl p-4 border border-[#C8A96B]/15 text-xs text-[#a39f96] flex items-center gap-2">
-                      <CreditCard className="h-4.5 w-4.5 text-[#C8A96B]" />
-                      <span>Se cancelará directamente en el salón executive.</span>
+                    <div className="bg-accent/10 rounded-xl p-4 border-2 border-accent/25 text-xs text-foreground flex items-center gap-2">
+                      <CreditCard className="h-4.5 w-4.5 text-accent" />
+                      <span>Se cancelará directamente en la barbería.</span>
                     </div>
                   )}
 
@@ -778,7 +781,7 @@ export default function Home() {
                     type="submit"
                     className="w-full py-3.5 gold-btn uppercase tracking-wider"
                   >
-                    Confirmar Cita VIP
+                    Confirmar Cita
                   </button>
                 </div>
               </form>

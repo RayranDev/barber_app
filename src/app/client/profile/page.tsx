@@ -300,9 +300,9 @@ export default function ClientProfile() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-8 pt-4 border-t border-[#d4af37]/10 flex flex-col items-center gap-2">
-        <p className="text-[9px] text-[#8a7a6b] uppercase tracking-wider">
-          © {new Date().getFullYear()} {barberName} • Caoba & Oro
+      <footer className="mt-8 pt-4 border-t border-primary/20 flex flex-col items-center gap-2">
+        <p className="text-[9px] text-primary/70 uppercase tracking-wider font-bold">
+          © {new Date().getFullYear()} {barberName} • JR &amp; Co.
         </p>
       </footer>
     </div>

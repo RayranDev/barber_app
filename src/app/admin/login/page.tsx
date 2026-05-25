@@ -138,7 +138,7 @@ export default function AdminLogin() {
       </div>
 
       <p className="text-center text-[9px] text-primary/70 uppercase tracking-wider mt-6 font-bold">
-        © {new Date().getFullYear()} {barberName} • Peluquería &amp; Barbería VIP
+        © {new Date().getFullYear()} {barberName} • JR &amp; Co.
       </p>
     </div>
   );

@@ -3,7 +3,7 @@
 -- 1. Configuración de la barbería con soporte para nombre, servicios y horarios dinámicos
 CREATE TABLE IF NOT EXISTS barber_settings (
   id TEXT PRIMARY KEY DEFAULT 'default',
-  barber_name TEXT NOT NULL DEFAULT 'Juan Rairan',
+  barber_name TEXT NOT NULL DEFAULT 'JR & Co.',
   slot_duration_minutes INTEGER NOT NULL DEFAULT 40,
   lunch_start TEXT DEFAULT '13:00',
   lunch_end TEXT DEFAULT '14:00',
@@ -35,13 +35,13 @@ CREATE TABLE IF NOT EXISTS barber_settings (
 
 -- Insertar configuración inicial con el nombre correcto de la barbería
 INSERT INTO barber_settings (id, barber_name, loyalty_benefit)
-VALUES ('default', 'Juan Rairan', 'Corte gratis o 50% de descuento en combo')
+VALUES ('default', 'JR & Co.', 'Corte gratis o 50% de descuento en combo')
 ON CONFLICT (id) DO UPDATE
   SET barber_name = EXCLUDED.barber_name,
       loyalty_benefit = EXCLUDED.loyalty_benefit
   WHERE barber_settings.barber_name = 'El Barbero'
      OR barber_settings.barber_name = 'La Elegante Barbería'
-     OR barber_settings.barber_name = 'JR & Co.'
+     OR barber_settings.barber_name = 'Juan Rairan'
      OR barber_settings.barber_name = 'JR & Co. Barber';
 
 -- 2. Tabla de clientes con perfil y fidelidad
@@ -92,36 +92,54 @@ ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE clients ENABLE ROW LEVEL SECURITY;
 
 -- Políticas para barber_settings
+DROP POLICY IF EXISTS "Lectura pública de configuraciones" ON barber_settings;
 CREATE POLICY "Lectura pública de configuraciones"
   ON barber_settings FOR SELECT TO public USING (true);
 
+DROP POLICY IF EXISTS "Admin puede modificar configuraciones" ON barber_settings;
 CREATE POLICY "Admin puede modificar configuraciones"
   ON barber_settings FOR ALL TO authenticated USING (true) WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Panel admin local actualiza configuraciones" ON barber_settings;
+CREATE POLICY "Panel admin local actualiza configuraciones"
+  ON barber_settings FOR UPDATE TO public USING (true) WITH CHECK (true);
+
 -- Políticas para clients
+DROP POLICY IF EXISTS "Clientes pueden ver su propio perfil por teléfono" ON clients;
 CREATE POLICY "Clientes pueden ver su propio perfil por teléfono"
   ON clients FOR SELECT TO public USING (true);
 
+DROP POLICY IF EXISTS "Clientes pueden registrarse" ON clients;
 CREATE POLICY "Clientes pueden registrarse"
   ON clients FOR INSERT TO public WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Admin gestiona clientes" ON clients;
 CREATE POLICY "Admin gestiona clientes"
   ON clients FOR ALL TO authenticated USING (true) WITH CHECK (true);
 
 -- Políticas para bookings
+DROP POLICY IF EXISTS "Lectura pública de citas" ON bookings;
 CREATE POLICY "Lectura pública de citas"
   ON bookings FOR SELECT TO public USING (true);
 
+DROP POLICY IF EXISTS "Cualquiera puede crear reservas" ON bookings;
 CREATE POLICY "Cualquiera puede crear reservas"
   ON bookings FOR INSERT TO public WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Admin gestiona citas" ON bookings;
 CREATE POLICY "Admin gestiona citas"
   ON bookings FOR ALL TO authenticated USING (true) WITH CHECK (true);
 
 -- El panel admin actual usa login local, no auth nativa de Supabase.
 -- Esta política permite que las acciones del panel funcionen con la anon key.
+DROP POLICY IF EXISTS "Panel admin local actualiza citas" ON bookings;
 CREATE POLICY "Panel admin local actualiza citas"
   ON bookings FOR UPDATE TO public USING (true) WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Panel admin local borra citas" ON bookings;
+CREATE POLICY "Panel admin local borra citas"
+  ON bookings FOR DELETE TO public USING (true);
+
+DROP POLICY IF EXISTS "Panel admin local actualiza clientes" ON clients;
 CREATE POLICY "Panel admin local actualiza clientes"
   ON clients FOR UPDATE TO public USING (true) WITH CHECK (true);

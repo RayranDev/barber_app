@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { 
-  createBooking, getBookingsByDate, updateBookingStatus, updateBookingTime, getClientHistory, getClientByPhone 
+  createBooking, deleteBooking, getBookingsByDate, updateBookingStatus, updateBookingTime, getClientHistory, getClientByPhone 
 } from '@/lib/supabase';
 import { notifications } from '@/services/notifications';
 
@@ -125,6 +125,22 @@ export async function PATCH(request: NextRequest) {
       }
     }
 
+    return NextResponse.json({ success: ok });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ success: false, error: 'Falta ID' }, { status: 400 });
+    }
+
+    const ok = await deleteBooking(id);
     return NextResponse.json({ success: ok });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

@@ -110,7 +110,7 @@ export default function ClientProfile() {
 
   const loyaltyVisitsRequired = settings?.loyaltyVisitsRequired || 5;
   const loyaltyBenefit = settings?.loyaltyBenefit || 'Corte gratis o 50% de descuento';
-  const barberName = settings?.barberName || 'Juan Rairan';
+  const barberName = settings?.barberName || 'JR & Co.';
 
   return (
     <div className="flex-1 w-full max-w-md mx-auto px-4 py-6 flex flex-col justify-between min-h-screen text-primary">
@@ -302,7 +302,7 @@ export default function ClientProfile() {
       {/* Footer */}
       <footer className="mt-8 pt-4 border-t border-primary/20 flex flex-col items-center gap-2">
         <p className="text-[9px] text-primary/70 uppercase tracking-wider font-bold">
-          © {new Date().getFullYear()} {barberName}
+          © {new Date().getFullYear()} {barberName} • Juan Rairan
         </p>
       </footer>
     </div>

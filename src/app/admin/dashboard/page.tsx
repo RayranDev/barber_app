@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Sparkles, Calendar, TrendingUp, Clock, DollarSign, LogOut, Check, X, Send, 
-  AlertTriangle, UserPlus, Filter, Shield, Settings, Eye, CheckCircle2, History, ChevronRight,
+  AlertTriangle, UserPlus, Filter, Shield, Settings, Eye, CheckCircle2, History, ChevronRight, RefreshCw,
   Scissors, Award, Trash2, Plus, Phone, Heart
 } from 'lucide-react';
 import { Booking, BarberSettings, Service } from '@/lib/supabase';
@@ -21,6 +21,7 @@ export default function AdminDashboard() {
   const [settings, setSettings] = useState<BarberSettings | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [receiptPreviewUrl, setReceiptPreviewUrl] = useState<string | null>(null);
   
   // Status Filter
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -253,6 +254,27 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleDeleteBooking = async (booking: Booking) => {
+    if (!booking.id) return;
+    const confirmed = window.confirm(`¿Borrar la reserva de ${booking.clientName}? Esta acción no se puede deshacer.`);
+    if (!confirmed) return;
+
+    setActionLoading(`delete-${booking.id}`);
+    try {
+      const res = await fetch(`/api/booking?id=${encodeURIComponent(booking.id)}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      if (data.success) {
+        await fetchData();
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('barber_session');
     router.push('/admin/login');
@@ -263,7 +285,7 @@ export default function AdminDashboard() {
     return b.status === statusFilter;
   });
 
-  const barberName = settings?.barberName || 'Juan Rairan';
+  const barberName = settings?.barberName || 'JR & Co.';
 
   return (
     <div className="flex-1 w-full max-w-5xl mx-auto px-4 py-6 space-y-6 min-h-screen">
@@ -322,12 +344,21 @@ export default function AdminDashboard() {
         </div>
 
         {/* Action Button Group */}
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="flex items-center justify-center gap-1.5 px-4 py-2.5 gold-btn text-xs uppercase tracking-wider w-full md:w-auto"
-        >
-          <UserPlus className="h-3.5 w-3.5" /> Agregar Reserva Manual
-        </button>
+        <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+          <button
+            onClick={fetchData}
+            disabled={loading}
+            className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg bg-card border border-primary/20 text-primary hover:border-primary/50 transition-all text-xs uppercase tracking-wider font-bold"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} /> Actualizar
+          </button>
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center justify-center gap-1.5 px-4 py-2.5 gold-btn text-xs uppercase tracking-wider"
+          >
+            <UserPlus className="h-3.5 w-3.5" /> Agregar Reserva Manual
+          </button>
+        </div>
       </div>
 
       {/* Metrics Board */}
@@ -435,7 +466,7 @@ export default function AdminDashboard() {
                     <div className="flex items-center gap-2">
                       {booking.paymentReceiptUrl && (
                         <button
-                          onClick={() => window.open(booking.paymentReceiptUrl, '_blank', 'noopener,noreferrer')}
+                          onClick={() => setReceiptPreviewUrl(booking.paymentReceiptUrl || null)}
                           className="p-2 bg-accent/10 hover:bg-accent/20 text-accent rounded-xl border border-accent/30 transition-all"
                           title="Ver comprobante"
                         >
@@ -493,6 +524,15 @@ export default function AdminDashboard() {
                           <X className="h-3.5 w-3.5" />
                         </button>
                       )}
+
+                      <button
+                        onClick={() => handleDeleteBooking(booking)}
+                        disabled={actionLoading === `delete-${booking.id}`}
+                        className="p-2 bg-destructive/10 text-destructive hover:bg-destructive/20 rounded-xl border border-destructive/35 transition-all"
+                        title="Borrar Reserva"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -617,6 +657,23 @@ export default function AdminDashboard() {
                 </button>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {/* Receipt Preview Modal */}
+      {receiptPreviewUrl && (
+        <div className="fixed inset-0 bg-foreground/60 flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+          <div className="vintage-panel w-full max-w-2xl max-h-[88vh] overflow-hidden animate-in zoom-in duration-300">
+            <div className="flex justify-between items-center border-b border-primary/25 px-4 py-3">
+              <h3 className="text-sm font-sans font-bold text-primary uppercase tracking-wider flex items-center gap-1.5">
+                <Eye className="h-4 w-4" /> Comprobante de Pago
+              </h3>
+              <button onClick={() => setReceiptPreviewUrl(null)} className="text-muted-foreground hover:text-foreground text-lg leading-none">×</button>
+            </div>
+            <div className="bg-background/70 p-3 max-h-[78vh] overflow-auto">
+              <img src={receiptPreviewUrl} alt="Comprobante de pago" className="w-full h-auto rounded-lg border border-primary/20" />
+            </div>
           </div>
         </div>
       )}

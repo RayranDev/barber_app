@@ -85,7 +85,7 @@ let mockBookings: Booking[] = [
 ];
 
 let mockSettings: BarberSettings = {
-  barberName: 'Juan Rairan',
+  barberName: 'JR & Co.',
   slotDurationMinutes: 40,
   lunchStart: '13:00',
   lunchEnd: '14:00',
@@ -300,6 +300,21 @@ export async function updateBookingTime(id: string, startTime: string, endTime: 
     .from('bookings')
     .update({ start_time: startTime, end_time: endTime, updated_at: new Date().toISOString() })
     .eq('id', id);
+  return !error;
+}
+
+export async function deleteBooking(id: string): Promise<boolean> {
+  if (IS_MOCKED) {
+    const initialLength = mockBookings.length;
+    mockBookings = mockBookings.filter(b => b.id !== id);
+    return mockBookings.length !== initialLength;
+  }
+
+  const { error } = await supabaseServer
+    .from('bookings')
+    .delete()
+    .eq('id', id);
+
   return !error;
 }
 

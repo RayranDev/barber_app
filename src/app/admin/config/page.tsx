@@ -151,10 +151,10 @@ export default function BarberConfig() {
             <ArrowLeft className="h-4 w-4" />
           </button>
           <div>
-            <h1 className="text-xl font-serif text-[#d4af37] uppercase flex items-center gap-1.5">
-              Configuración Vintage <span className="text-[9px] bg-[#d4af37]/10 text-[#d4af37] border border-[#d4af37]/25 px-2 py-0.5 rounded uppercase font-sans">Admin</span>
+            <h1 className="text-xl font-sans font-extrabold text-primary uppercase flex items-center gap-1.5 tracking-wider">
+              Configuración <span className="text-[9px] bg-primary/10 text-primary border border-primary/25 px-2 py-0.5 rounded uppercase font-sans">Admin</span>
             </h1>
-            <p className="text-[10px] text-[#bdae9e]">Personaliza el nombre, servicios, programas de fidelidad y horarios.</p>
+            <p className="text-[10px] text-muted-foreground">Personaliza JR & CO, servicios, programas de fidelidad y horarios de Juan Rairan.</p>
           </div>
         </div>
       </header>
@@ -166,29 +166,29 @@ export default function BarberConfig() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Section: Barber Identity */}
           <div className="space-y-3">
-            <h2 className="text-xs font-serif uppercase tracking-wider text-[#d4af37] flex items-center gap-1.5">
-              <User className="h-4 w-4 text-[#d4af37]" /> Identidad de la Barbería
+            <h2 className="text-sm font-bold uppercase tracking-wider text-primary flex items-center gap-2">
+              <User className="h-4 w-4" /> Identidad de la Barbería
             </h2>
             <div className="vintage-panel p-5 border-[#d4af37]/15 space-y-4">
               <div>
-                <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Nombre Comercial de la Barbería</label>
+                <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">Nombre Comercial de la Barbería</label>
                 <div className="relative">
                   <input
                     type="text"
                     required
                     value={settings.barberName || ''}
                     onChange={(e) => setSettings({ ...settings, barberName: e.target.value })}
-                    placeholder="Juan Rairan"
+                    placeholder="JR & Co."
                     className="w-full pl-9 pr-3 py-2 text-xs vintage-input"
                   />
                   <Type className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#8a7a6b]" />
                 </div>
-                <p className="text-[9px] text-[#8a7a6b] mt-1">Este nombre se mostrará en el encabezado del cliente.</p>
+                <p className="text-[9px] text-muted-foreground mt-1">Este nombre se mostrará como marca principal. Barbero: Juan Rairan.</p>
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Cita Base (min)</label>
+                  <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">Cita Base (min)</label>
                   <select
                     value={settings.slotDurationMinutes}
                     onChange={(e) => setSettings({ ...settings, slotDurationMinutes: Number(e.target.value) })}
@@ -204,7 +204,7 @@ export default function BarberConfig() {
                 </div>
 
                 <div>
-                  <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Horario Almuerzo</label>
+                  <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">Horario Almuerzo</label>
                   <div className="flex items-center gap-1">
                     <input
                       type="text"
@@ -229,12 +229,12 @@ export default function BarberConfig() {
 
           {/* Section: Loyalty Config */}
           <div className="space-y-3">
-            <h2 className="text-xs font-serif uppercase tracking-wider text-[#d4af37] flex items-center gap-1.5">
-              <Award className="h-4 w-4 text-[#d4af37]" /> Tarjeta de Fidelización (Sellos)
+            <h2 className="text-sm font-bold uppercase tracking-wider text-primary flex items-center gap-2">
+              <Award className="h-4 w-4" /> Tarjeta de Fidelización (Sellos)
             </h2>
             <div className="vintage-panel p-5 border-[#d4af37]/15 space-y-4">
               <div>
-                <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Sellos requeridos para premio</label>
+                <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">Sellos requeridos para premio</label>
                 <input
                   type="number"
                   min="3"
@@ -246,7 +246,7 @@ export default function BarberConfig() {
               </div>
 
               <div>
-                <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Premio / Beneficio al Completar</label>
+                <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">Premio / Beneficio al Completar</label>
                 <input
                   type="text"
                   required
@@ -263,8 +263,8 @@ export default function BarberConfig() {
 
         {/* ROW 2: SERVICE CATALOG CATALOG */}
         <div className="space-y-3">
-          <h2 className="text-xs font-serif uppercase tracking-wider text-[#d4af37] flex items-center gap-1.5">
-            <Scissors className="h-4.5 w-4.5 text-[#d4af37]" /> Catálogo de Servicios (Sin Precios)
+          <h2 className="text-sm font-bold uppercase tracking-wider text-primary flex items-center gap-2">
+            <Scissors className="h-4.5 w-4.5" /> Catálogo de Servicios (Sin Precios)
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -278,11 +278,11 @@ export default function BarberConfig() {
                 {settings.services?.map((srv) => (
                   <div 
                     key={srv.id}
-                    className="flex justify-between items-center p-3 bg-[#110e0c] border border-[#d4af37]/10 rounded"
+                    className="flex justify-between items-center p-4 bg-card border-2 border-primary/20 hover:border-primary/50 rounded-2xl transition-all"
                   >
                     <div>
-                      <p className="text-xs font-serif text-white uppercase font-bold">{srv.name}</p>
-                      <p className="text-[9px] text-[#bdae9e] mt-0.5">{srv.duration} minutos de duración</p>
+                      <p className="text-xs text-foreground uppercase font-bold tracking-wider">{srv.name}</p>
+                      <p className="text-[10px] text-muted-foreground mt-1">{srv.duration} minutos de duración</p>
                     </div>
                     <button
                       type="button"
@@ -299,13 +299,13 @@ export default function BarberConfig() {
 
             {/* Add Service Form */}
             <div className="vintage-panel p-5 border-[#d4af37]/15 space-y-3.5">
-              <p className="text-[10px] text-[#bdae9e] font-serif uppercase tracking-wider border-b border-[#d4af37]/15 pb-1">
+              <p className="text-xs text-primary font-bold uppercase tracking-wider border-b border-primary/15 pb-1">
                 Añadir Nuevo Servicio
               </p>
               
               <div className="space-y-3">
                 <div>
-                  <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Nombre del Servicio</label>
+                  <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">Nombre del Servicio</label>
                   <input
                     type="text"
                     value={newServiceName}
@@ -316,7 +316,7 @@ export default function BarberConfig() {
                 </div>
 
                 <div>
-                  <label className="text-[9px] font-medium text-[#bdae9e] uppercase tracking-wider block mb-1">Duración del Servicio (min)</label>
+                  <label className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">Duración del Servicio (min)</label>
                   <select
                     value={newServiceDuration}
                     onChange={(e) => setNewServiceDuration(Number(e.target.value))}
@@ -346,8 +346,8 @@ export default function BarberConfig() {
 
         {/* ROW 3: WEEKLY CONFIG */}
         <div className="space-y-3">
-          <h2 className="text-xs font-serif uppercase tracking-wider text-[#d4af37] flex items-center gap-1.5">
-            <Calendar className="h-4.5 w-4.5 text-[#d4af37]" /> Horario de Trabajo Semanal
+          <h2 className="text-sm font-bold uppercase tracking-wider text-primary flex items-center gap-2">
+            <Calendar className="h-4.5 w-4.5" /> Horario de Trabajo Semanal
           </h2>
 
           <div className="vintage-panel p-5 border-[#d4af37]/15 space-y-3">
@@ -360,10 +360,10 @@ export default function BarberConfig() {
               return (
                 <div 
                   key={day} 
-                  className={`flex flex-col sm:flex-row sm:items-center justify-between p-3 border rounded transition-all ${
+                  className={`flex flex-col sm:flex-row sm:items-center justify-between p-4 border-2 rounded-2xl transition-all ${
                     schedule.active 
-                      ? 'bg-[#110e0c] border-[#d4af37]/15' 
-                      : 'bg-transparent border-[#d4af37]/5 opacity-40'
+                      ? 'bg-card border-primary/20 hover:border-primary/50' 
+                      : 'bg-card/40 border-primary/10 opacity-50'
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -373,7 +373,7 @@ export default function BarberConfig() {
                       onChange={() => handleDayToggle(day)}
                       className="rounded border-[#d4af37]/30 text-[#d4af37] focus:ring-[#d4af37] bg-[#110e0c]"
                     />
-                    <span className="text-xs font-serif font-bold text-white min-w-[80px] uppercase tracking-wide">{dayName}</span>
+                    <span className="text-xs font-bold text-foreground min-w-[80px] uppercase tracking-wide">{dayName}</span>
                   </div>
 
                   {schedule.active && (

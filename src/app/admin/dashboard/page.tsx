@@ -263,7 +263,7 @@ export default function AdminDashboard() {
     return b.status === statusFilter;
   });
 
-  const barberName = settings?.barberName || 'JR & Co.';
+  const barberName = settings?.barberName || 'Juan Rairan';
 
   return (
     <div className="flex-1 w-full max-w-5xl mx-auto px-4 py-6 space-y-6 min-h-screen">
@@ -433,6 +433,16 @@ export default function AdminDashboard() {
 
                     {/* Admin Actions */}
                     <div className="flex items-center gap-2">
+                      {booking.paymentReceiptUrl && (
+                        <button
+                          onClick={() => window.open(booking.paymentReceiptUrl, '_blank', 'noopener,noreferrer')}
+                          className="p-2 bg-accent/10 hover:bg-accent/20 text-accent rounded-xl border border-accent/30 transition-all"
+                          title="Ver comprobante"
+                        >
+                          <Eye className="h-3.5 w-3.5" />
+                        </button>
+                      )}
+
                       <button
                         onClick={() => fetchHistory(booking.clientPhone)}
                         className="p-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl border border-primary/20 transition-all"

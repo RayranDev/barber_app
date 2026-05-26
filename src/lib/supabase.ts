@@ -26,12 +26,15 @@ export interface BarberSettings extends BaseBarberSettings {
 export interface Booking extends BaseBooking {
   serviceId?: string;
   serviceName?: string;
+  paymentReceiptUrl?: string;
 }
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder-project.supabase.co';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseServer = createClient(supabaseUrl, supabaseServiceRoleKey || supabaseAnonKey);
 
 const IS_MOCKED = !process.env.NEXT_PUBLIC_SUPABASE_URL;
 
@@ -82,7 +85,7 @@ let mockBookings: Booking[] = [
 ];
 
 let mockSettings: BarberSettings = {
-  barberName: 'JR & Co. Barber',
+  barberName: 'Juan Rairan',
   slotDurationMinutes: 40,
   lunchStart: '13:00',
   lunchEnd: '14:00',
@@ -203,7 +206,7 @@ export async function createBooking(booking: Omit<Booking, 'id'>): Promise<Booki
     mockBookings.push(newBooking);
     return newBooking;
   }
-  const { data, error } = await supabase
+  const { data, error } = await supabaseServer
     .from('bookings')
     .insert({
       client_id: client.id,
@@ -265,7 +268,7 @@ export async function updateBookingStatus(id: string, status: Booking['status'])
 
   // Si pasa a completada, obtenemos la cita para actualizar la fidelidad del cliente
   if (status === 'completed') {
-    const { data: bookingData } = await supabase
+    const { data: bookingData } = await supabaseServer
       .from('bookings')
       .select('client_phone')
       .eq('id', id)
@@ -276,7 +279,7 @@ export async function updateBookingStatus(id: string, status: Booking['status'])
     }
   }
 
-  const { error } = await supabase
+  const { error } = await supabaseServer
     .from('bookings')
     .update({ status, updated_at: new Date().toISOString() })
     .eq('id', id);
@@ -293,7 +296,7 @@ export async function updateBookingTime(id: string, startTime: string, endTime: 
     }
     return false;
   }
-  const { error } = await supabase
+  const { error } = await supabaseServer
     .from('bookings')
     .update({ start_time: startTime, end_time: endTime, updated_at: new Date().toISOString() })
     .eq('id', id);
@@ -447,4 +450,3 @@ export async function addLoyaltyStamp(phone: string): Promise<boolean> {
 
   return !error;
 }
-

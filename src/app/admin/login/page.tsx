@@ -50,7 +50,7 @@ export default function AdminLogin() {
     }
   };
 
-  const barberName = "JR & Co.";
+  const barberName = "Juan Rairan";
 
   return (
     <div className="flex-1 w-full max-w-sm mx-auto px-4 py-16 flex flex-col justify-center min-h-screen text-primary">
@@ -138,7 +138,7 @@ export default function AdminLogin() {
       </div>
 
       <p className="text-center text-[9px] text-primary/70 uppercase tracking-wider mt-6 font-bold">
-        © {new Date().getFullYear()} {barberName} • JR &amp; Co.
+        © {new Date().getFullYear()} {barberName}
       </p>
     </div>
   );

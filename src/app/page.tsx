@@ -62,7 +62,7 @@ function ScissorsTransition({ visible }: { visible: boolean }) {
           <line x1="14.47" y1="14.48" x2="20" y2="20" />
           <line x1="8.12" y1="8.12" x2="12" y2="12" />
         </svg>
-        <p className="text-[#FDF7EE] text-xs uppercase tracking-widest font-serif font-bold">JR &amp; CO.</p>
+        <p className="text-[#FDF7EE] text-xs uppercase tracking-widest font-serif font-bold">Juan Rairan</p>
       </div>
     </div>
   );
@@ -222,6 +222,7 @@ export default function Home() {
           startTime: selectedSlot.time,
           endTime: endTimeStr,
           paymentMethod,
+          paymentReceiptUrl: receiptPreview,
           serviceId: selectedService.id,
           serviceName: selectedService.name
         })
@@ -278,7 +279,7 @@ export default function Home() {
     }
   };
 
-  const currentBarberName = settings?.barberName || 'JR & Co.';
+  const currentBarberName = settings?.barberName || 'Juan Rairan';
   const [receiptPreview, setReceiptPreview] = useState<string | null>(null);
 
   return (
@@ -295,7 +296,7 @@ export default function Home() {
             {currentBarberName}
           </h1>
           <p className="text-[10px] text-primary/70 tracking-widest font-sans uppercase font-extrabold">
-            JR &amp; Co.
+            Juan Rairan
           </p>
         </div>
       </header>
@@ -349,7 +350,7 @@ export default function Home() {
             <div>
               <h2 className="text-xl font-sans font-extrabold text-primary uppercase tracking-wide">¡Reserva Solicitada!</h2>
               <p className="text-xs text-muted-foreground mt-2">
-                Tu cita ha quedado pre-agendada en JR &amp; Co. Barber. Te notificaremos por WhatsApp y validaremos tu transferencia a la brevedad.
+                Tu cita ha quedado pre-agendada con Juan Rairan. Te notificaremos por WhatsApp y validaremos tu transferencia a la brevedad.
               </p>
             </div>
             
@@ -746,7 +747,7 @@ export default function Home() {
                           <div className="p-3 bg-primary/8 border-2 border-primary/15 rounded-lg text-xs text-muted-foreground space-y-1 animate-in fade-in">
                             <p className="text-accent font-bold">Bancolombia Ahorros</p>
                             <p>Número: <span className="text-foreground font-bold">123-456789-01</span></p>
-                            <p>A nombre de: <span className="text-foreground font-semibold">JR &amp; Co. Barber</span></p>
+                            <p>A nombre de: <span className="text-foreground font-semibold">Juan Rairan</span></p>
                           </div>
                         )}
 
@@ -834,7 +835,7 @@ export default function Home() {
           </Link>
         </div>
         <p className="text-[9px] text-primary/70 uppercase tracking-wider font-bold">
-          © {new Date().getFullYear()} {currentBarberName} • JR &amp; Co.
+          © {new Date().getFullYear()} {currentBarberName}
         </p>
       </footer>
     </div>

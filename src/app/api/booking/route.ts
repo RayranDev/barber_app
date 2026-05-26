@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { clientName, clientPhone, bookingDate, startTime, endTime, paymentMethod, serviceId, serviceName, status } = body;
+    const { clientName, clientPhone, bookingDate, startTime, endTime, paymentMethod, paymentReceiptUrl, serviceId, serviceName, status } = body;
 
     if (!clientName || !clientPhone || !bookingDate || !startTime || !endTime || !paymentMethod) {
       return NextResponse.json(
@@ -74,6 +74,7 @@ export async function POST(request: NextRequest) {
       endTime,
       status: status || 'pending',
       paymentMethod,
+      paymentReceiptUrl,
       serviceId: serviceId || 'classic',
       serviceName: serviceName || 'Corte Clásico'
     });
